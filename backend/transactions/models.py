@@ -12,7 +12,7 @@ class Transaction(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     category = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
-    date = models.DateField()
+    date = models.DateField(auto_now_add=True)
     currency = models.CharField(max_length=10, default='INR')
 
     def __str__(self):
