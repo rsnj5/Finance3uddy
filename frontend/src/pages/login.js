@@ -16,10 +16,10 @@ const Login = () => {
     setError('');
     try {
         const response = await login(credentials);
-        const token = response.data.access; // Extract token
+        const token = response.data.access; 
 
-        localStorage.setItem('access', token); // Store token in localStorage
-        dispatch(loginUser(token)); // Dispatch the token
+        localStorage.setItem('access', token); 
+        dispatch(loginUser(token)); 
 
         navigate('/dashboard');
     } catch (error) {

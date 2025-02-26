@@ -6,6 +6,7 @@ import Login from "./pages/login";
 import Signup from "./pages/signup";
 import Dashboard from "./pages/Dashboard";
 import Transactions from "./pages/Transaction";
+import GoalTracking from "./pages/goalsetting";
 
 const ProtectedRoute = ({ element }) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -20,6 +21,8 @@ const App = () => {
       <Route path="/signup" element={<Signup />} />
       <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
       <Route path="/transactions" element={<ProtectedRoute element={<Transactions />} />} />
+      <Route path="/goals" element={<ProtectedRoute element={<GoalTracking />} />} />
+
     </Routes>
   );
 };

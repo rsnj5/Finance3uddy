@@ -19,15 +19,10 @@ from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
-<<<<<<< HEAD
-    path('api/auth/', include('authentication.urls')), 
+    path('admin/',admin.site.urls),
+    path('api/auth/', include('authentication.urls')),  
     path('api/transactions/', include('transactions.urls')),  
     path('api/goals/', include('goals.urls')),
-=======
-    path('admin/',admin.site.urls),
-    path('api/auth/', include('authentication.urls')),  # Your authentication app
-    path('api/transactions/', include('transactions.urls')),  # Transactions app
->>>>>>> 0192418c78c1a599830b0b6dd0da9a62f7536202
 
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),

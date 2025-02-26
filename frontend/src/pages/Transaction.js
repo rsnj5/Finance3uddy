@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "../styles/Transaction.css";
 
 const Transactions = () => {
   const [transactions, setTransactions] = useState([]);
@@ -10,11 +11,8 @@ const Transactions = () => {
   const [editingTransaction, setEditingTransaction] = useState(null);
 
   const navigate = useNavigate();
-
-  // Function to get auth token from localStorage
   const getAuthToken = () => localStorage.getItem("access");
 
-  // Fetch transactions
   useEffect(() => {
     const fetchTransactions = async () => {
       const token = getAuthToken();
@@ -33,7 +31,6 @@ const Transactions = () => {
     fetchTransactions();
   }, []);
 
-  // Handle input changes
   const handleChange = (e, type) => {
     const { name, value } = e.target;
     type === "income"
@@ -41,45 +38,34 @@ const Transactions = () => {
       : setExpenseData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Add transaction (only if authenticated)
-const handleAddTransaction = async (type) => {
-  const token = getAuthToken();
-  if (!token) {
-    alert("User not authenticated. Redirecting to login...");
-    navigate("/login");
-    return;
-  }
+  const handleAddTransaction = async (type) => {
+    const token = getAuthToken();
+    if (!token) {
+      alert("User not authenticated. Redirecting to login...");
+      navigate("/login");
+      return;
+    }
 
-  const data = type === "income" 
-    ? { ...incomeData, type } 
-    : { ...expenseData, type };
+    const data = type === "income" ? { ...incomeData, type } : { ...expenseData, type };
 
-  console.log("Sending Data:", data);  // Debugging
+    if (!data.category || !data.amount || !data.desc) {
+      alert("Please fill in all fields");
+      return;
+    }
 
-  if (!data.category || !data.amount || !data.desc) {
-    alert("Please fill in all fields");
-    return;
-  }
+    try {
+      await axios.post("http://localhost:8000/api/transactions/", data, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
-  try {
-    await axios.post(
-      "http://localhost:8000/api/transactions/",
-      data,
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
+      refreshTransactions();
+      setIncomeData({ category: "", amount: "", desc: "" });
+      setExpenseData({ category: "", amount: "", desc: "" });
+    } catch (error) {
+      console.error("Add Transaction failed:", error.response?.data || error);
+    }
+  };
 
-    console.log("Transaction added successfully!");
-    refreshTransactions();
-    setIncomeData({ category: "", amount: "", desc: "" });
-    setExpenseData({ category: "", amount: "", desc: "" });
-
-  } catch (error) {
-    console.error("Add Transaction failed:", error.response?.data || error);
-  }
-};
-
-
-  // Update transaction (only if authenticated)
   const handleUpdate = async () => {
     const token = getAuthToken();
     if (!token) {
@@ -88,18 +74,15 @@ const handleAddTransaction = async (type) => {
       return;
     }
 
-    if (!editingTransaction) return;
-    if (!editingTransaction.category || !editingTransaction.amount || !editingTransaction.desc) {
+    if (!editingTransaction || !editingTransaction.category || !editingTransaction.amount || !editingTransaction.desc) {
       alert("Please fill in all fields before saving.");
       return;
     }
 
     try {
-      await axios.put(
-        `http://localhost:8000/api/transactions/${editingTransaction.id}/`,
-        editingTransaction,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      await axios.put(`http://localhost:8000/api/transactions/${editingTransaction.id}/`, editingTransaction, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
       refreshTransactions();
       setShowEdit(false);
@@ -109,7 +92,6 @@ const handleAddTransaction = async (type) => {
     }
   };
 
-  // Delete transaction (only if authenticated)
   const handleDelete = async (id) => {
     const token = getAuthToken();
     if (!token) {
@@ -129,7 +111,6 @@ const handleAddTransaction = async (type) => {
     }
   };
 
-  // Refresh transactions
   const refreshTransactions = async () => {
     const token = getAuthToken();
     if (!token) return;
@@ -151,16 +132,19 @@ const handleAddTransaction = async (type) => {
       <h2>Transactions</h2>
 
       {!token ? (
-        <p className="auth-warning">You need to <a href="/login">log in</a> to add transactions.</p>
+        <p className="auth-warning">
+          You need to <a href="/login">log in</a> to add transactions.
+        </p>
       ) : (
         <>
-          {/* Add Income and Expense Forms */}
           <div className="add-transaction income">
             <h3>Add Income</h3>
             <input type="text" name="category" placeholder="Category" value={incomeData.category} onChange={(e) => handleChange(e, "income")} />
             <input type="number" name="amount" placeholder="Amount" value={incomeData.amount} onChange={(e) => handleChange(e, "income")} />
             <input type="text" name="desc" placeholder="Description" value={incomeData.desc} onChange={(e) => handleChange(e, "income")} />
-            <button className="btn add income" onClick={() => handleAddTransaction("income")}>Add Income</button>
+            <button className="btn add income" onClick={() => handleAddTransaction("income")}>
+              Add Income
+            </button>
           </div>
 
           <div className="add-transaction expense">
@@ -168,12 +152,13 @@ const handleAddTransaction = async (type) => {
             <input type="text" name="category" placeholder="Category" value={expenseData.category} onChange={(e) => handleChange(e, "expense")} />
             <input type="number" name="amount" placeholder="Amount" value={expenseData.amount} onChange={(e) => handleChange(e, "expense")} />
             <input type="text" name="desc" placeholder="Description" value={expenseData.desc} onChange={(e) => handleChange(e, "expense")} />
-            <button className="btn add expense" onClick={() => handleAddTransaction("expense")}>Add Expense</button>
+            <button className="btn add expense" onClick={() => handleAddTransaction("expense")}>
+              Add Expense
+            </button>
           </div>
         </>
       )}
 
-      {/* Transaction List */}
       {transactions.length > 0 ? (
         transactions.map((transaction) => (
           <div key={transaction.id} className={`transaction-card ${transaction.type}`}>
@@ -183,11 +168,26 @@ const handleAddTransaction = async (type) => {
               <span className={`tag ${transaction.type}`}>{transaction.type.toUpperCase()}</span>
             </div>
             <div className="card-actions">
-              <button className="btn edit" onClick={() => {
-                setShowEdit(true);
-                setEditingTransaction({ ...transaction });
-              }}>Edit</button>
-              <button className="btn delete" onClick={() => handleDelete(transaction.id)}>Delete</button>
+              <button
+                className="btn edit"
+                onClick={() => {
+                  setShowEdit(true);
+                  setEditingTransaction({ ...transaction });
+                }}
+              >
+                Edit
+              </button>
+              <button
+                className="btn delete"
+                onClick={() => {
+                  const confirmDelete = window.confirm(`Are you sure you want to delete the transaction: "${transaction.category}"?`);
+                  if (confirmDelete) {
+                    handleDelete(transaction.id);
+                  }
+                }}
+              >
+                Delete
+              </button>
             </div>
           </div>
         ))
@@ -195,15 +195,18 @@ const handleAddTransaction = async (type) => {
         <p>No transactions available</p>
       )}
 
-      {/* Edit Modal */}
       {showEdit && (
         <div className="modal">
           <h3>Edit Transaction</h3>
           <input type="text" name="category" placeholder="Category" value={editingTransaction?.category} onChange={(e) => setEditingTransaction({ ...editingTransaction, category: e.target.value })} />
           <input type="number" name="amount" placeholder="Amount" value={editingTransaction?.amount} onChange={(e) => setEditingTransaction({ ...editingTransaction, amount: e.target.value })} />
           <input type="text" name="desc" placeholder="Description" value={editingTransaction?.desc} onChange={(e) => setEditingTransaction({ ...editingTransaction, desc: e.target.value })} />
-          <button className="btn save" onClick={handleUpdate}>Save</button>
-          <button className="btn cancel" onClick={() => setShowEdit(false)}>Cancel</button>
+          <button className="btn save" onClick={handleUpdate}>
+            Save
+          </button>
+          <button className="btn cancel" onClick={() => setShowEdit(false)}>
+            Cancel
+          </button>
         </div>
       )}
     </div>
@@ -211,4 +214,3 @@ const handleAddTransaction = async (type) => {
 };
 
 export default Transactions;
-
