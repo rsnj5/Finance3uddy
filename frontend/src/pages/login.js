@@ -12,17 +12,20 @@ const Login = () => {
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        setError('');
-        try {
-            const response = await login(credentials);
-            localStorage.setItem('access', response.data.access);
-            dispatch(loginUser({ username: credentials.username }));
-            navigate('/dashboard');
-        } catch (error) {
-            setError(error.response?.data?.detail || "Invalid Credentials");
-        }
-    };
+    e.preventDefault();
+    setError('');
+    try {
+        const response = await login(credentials);
+        const token = response.data.access; // Extract token
+
+        localStorage.setItem('access', token); // Store token in localStorage
+        dispatch(loginUser(token)); // Dispatch the token
+
+        navigate('/dashboard');
+    } catch (error) {
+        setError(error.response?.data?.detail || "Invalid Credentials");
+    }
+};
 
     return (
         <div className="auth-container">

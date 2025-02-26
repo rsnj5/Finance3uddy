@@ -12,7 +12,7 @@ const Transactions = () => {
   const navigate = useNavigate();
 
   // Function to get auth token from localStorage
-  const getAuthToken = () => localStorage.getItem("token");
+  const getAuthToken = () => localStorage.getItem("access");
 
   // Fetch transactions
   useEffect(() => {
@@ -42,36 +42,42 @@ const Transactions = () => {
   };
 
   // Add transaction (only if authenticated)
-  const handleAddTransaction = async (type) => {
-    const token = getAuthToken();
-    if (!token) {
-      alert("User not authenticated. Redirecting to login...");
-      navigate("/login");
-      return;
-    }
+const handleAddTransaction = async (type) => {
+  const token = getAuthToken();
+  if (!token) {
+    alert("User not authenticated. Redirecting to login...");
+    navigate("/login");
+    return;
+  }
 
-    const data = type === "income" ? incomeData : expenseData;
+  const data = type === "income" 
+    ? { ...incomeData, type } 
+    : { ...expenseData, type };
 
-    if (!data.category || !data.amount || !data.desc) {
-      alert("Please fill in all fields");
-      return;
-    }
+  console.log("Sending Data:", data);  // Debugging
 
-    try {
-      await axios.post(
-        "http://localhost:8000/api/transactions/",
-        { ...data, type },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+  if (!data.category || !data.amount || !data.desc) {
+    alert("Please fill in all fields");
+    return;
+  }
 
-      refreshTransactions();
-      if (type === "income") setIncomeData({ category: "", amount: "", desc: "" });
-      else setExpenseData({ category: "", amount: "", desc: "" });
+  try {
+    await axios.post(
+      "http://localhost:8000/api/transactions/",
+      data,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
 
-    } catch (error) {
-      console.error("Add Transaction failed:", error);
-    }
-  };
+    console.log("Transaction added successfully!");
+    refreshTransactions();
+    setIncomeData({ category: "", amount: "", desc: "" });
+    setExpenseData({ category: "", amount: "", desc: "" });
+
+  } catch (error) {
+    console.error("Add Transaction failed:", error.response?.data || error);
+  }
+};
+
 
   // Update transaction (only if authenticated)
   const handleUpdate = async () => {
