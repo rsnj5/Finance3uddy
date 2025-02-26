@@ -1,0 +1,57 @@
+/* Page Container */
+.expense-container {
+    min-height: 100vh;
+    background-color: #f3f4f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Content Box */
+.expense-box {
+    max-width: 600px;
+    width: 100%;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Title */
+.title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #374151;
+    margin-bottom: 15px;
+}
+
+/* Tabs */
+.tab-buttons {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.tab-button {
+    font-size: 1rem;
+    padding: 8px 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    color: #6b7280;
+}
+
+.tab-button.active {
+    color: #2563eb;
+    border-bottom: 2px solid #2563eb;
+}
+
+/* Tab Content */
+.tab-content {
+    margin-top: 20px;
+}
