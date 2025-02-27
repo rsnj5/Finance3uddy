@@ -10,7 +10,7 @@ import GoalTracking from "./pages/goalsetting";
 import ExpenseSplit from "./pages/expensesplit";
 import { TransactionProvider } from "./contexts/TransactionContext";
 import TransactionManagement from "./pages/TransactionManagement";
-
+import Chart from "./pages/Chart";
 
 const ProtectedRoute = ({ element }) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -29,6 +29,7 @@ const App = () => {
         <Route path="/expensesplit" element={<ProtectedRoute element={<ExpenseSplit />} />} />
         <Route path="/transactions" element={<ProtectedRoute element={<Transactions />} />} />
         <Route path="/viewtransaction" element={<ProtectedRoute element={<TransactionManagement />} />} />
+        <Route path="/charts" element={<ProtectedRoute element={<Chart />} />} />
       </Routes>
     </TransactionProvider>
   );
