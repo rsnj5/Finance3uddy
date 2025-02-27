@@ -1,20 +1,18 @@
 from rest_framework import serializers
-from .models import Group,Transaction,Expenses
+from .models import Group, Transaction
+from django.contrib.auth.models import User
 
 class GroupSerializer(serializers.ModelSerializer):
+    members = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True, required=False)
+
     class Meta:
         model = Group
-        fields = '__all__'
+        fields = "__all__"
 
 class TransactionSerializer(serializers.ModelSerializer):
+    participants = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True)
+
     class Meta:
         model = Transaction
-        fields = '__all__'
-        read_only_fields = ['created_at']
-
-class ExpensesSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Expenses
-        fields = '__all__'
-       # read_only_fields = ['user']
+        fields = "__all__"
 
