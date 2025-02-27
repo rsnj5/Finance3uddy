@@ -2,13 +2,13 @@ from rest_framework import serializers
 from .models import Group, Transaction
 from django.contrib.auth.models import User
 
-class GroupSerializer(serializers.ModelSerializer):
-    members = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True, required=False)
+from rest_framework import serializers
+from .models import Group
 
+class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
-        fields = "__all__"
-
+        fields = ['id', 'name', 'members']  
 class TransactionSerializer(serializers.ModelSerializer):
     participants = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True)
 

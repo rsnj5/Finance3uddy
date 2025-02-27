@@ -11,14 +11,40 @@ class GroupListCreateView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return self.request.user.groups.all()
+        return Group.objects.filter(members=self.request.user)
 
     def perform_create(self, serializer):
         members_data = self.request.data.get("members", [])
         group = serializer.save()
-        group.members.add(self.request.user)  # Add creator
-        members = User.objects.filter(id__in=members_data)
+        group.members.add(self.request.user)  
+
+        if members_data:
+           members = User.objects.filter(id__in=members_data)
+           if not members.exists():
+             raise serializers.ValidationError("One or more members do not exist.")
         group.members.add(*members)
+            
+class AddMembersToGroupView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, group_id):
+        group = get_object_or_404(Group, id=group_id)
+
+        if request.user not in group.members.all():
+            return Response({"error": "You are not authorized to add members."}, status=403)
+
+        members_data = request.data.get("members", [])  # Expecting a list of usernames
+
+        if not members_data:
+            return Response({"error": "No members provided."}, status=400)
+
+        members = User.objects.filter(username__in=members_data)  # Fetch by username
+        if not members.exists():
+            return Response({"error": "One or more users not found."}, status=400)
+
+        group.members.add(*members)
+
+        return Response({"message": "Members added successfully.", "members": [m.username for m in members]})
 
 class TransactionListCreateView(generics.ListCreateAPIView):
     serializer_class = TransactionSerializer

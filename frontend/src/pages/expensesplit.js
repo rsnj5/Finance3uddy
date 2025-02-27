@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import '../styles/expensesplit.css';
 
 const ExpenseSplit = () => {
   const [groups, setGroups] = useState([]);
   const [groupName, setGroupName] = useState("");
+  const [selectedMembers, setSelectedMembers] = useState([]);
+  const [authorizedUsers, setAuthorizedUsers] = useState([]);
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [transactions, setTransactions] = useState([]);
   const [expenses, setExpenses] = useState([]);
-  const [error, setError] = useState(null);
   const [transactionData, setTransactionData] = useState({
     amount: "",
     description: "",
+    payer: "",
     participants: [],
   });
 
@@ -19,94 +22,140 @@ const ExpenseSplit = () => {
   const getAuthToken = () => localStorage.getItem("access");
 
   useEffect(() => {
-    const fetchGroups = async () => {
-      const token = getAuthToken();
-      if (!token) return;
-
-      try {
-        const response = await axios.get("http://localhost:8000/api/expensesplit/groups/", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setGroups(response.data);
-      } catch (error) {
-        console.error("Error fetching groups:", error);
-      }
-    };
-
     fetchGroups();
+    fetchAuthorizedUsers();
   }, []);
+  useEffect(() => {
+    if (selectedGroup) {
+      fetchTransactions();
+      fetchExpenses();
+    }
+  }, [selectedGroup]);
+
+  const fetchGroups = async () => {
+    const token = getAuthToken();
+    if (!token) return;
+  
+    try {
+      const response = await axios.get("http://localhost:8000/api/expensesplit/groups/", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+  
+      console.log("Fetched Groups:", response.data); // Debugging
+      setGroups(response.data);
+    } catch (error) {
+      console.error("Error fetching groups:", error);
+    }
+  };
+  
+  
+
+  const fetchExpenses = async () => {
+    const token = getAuthToken();
+    if (!token || !selectedGroup) return;
+
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/expensesplit/groups/${selectedGroup.id}/expenses/`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setExpenses(response.data.expenses);
+    } catch (error) {
+      console.error("Error fetching expenses:", error);
+    }
+  };
+
+const fetchTransactions = async () => {
+    const token = getAuthToken();
+    if (!token || !selectedGroup) return;
+
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/expensesplit/groups/${selectedGroup.id}/transactions/`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setTransactions(response.data);
+    } catch (error) {
+      console.error("Error fetching transactions:", error);
+    }
+  };
+
+  const fetchAuthorizedUsers = async () => {
+    const token = getAuthToken();
+    if (!token) return;
+
+    try {
+      const response = await axios.get("http://localhost:8000/api/users/authorized/", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setAuthorizedUsers(response.data);
+    } catch (error) {
+      console.error("Error fetching authorized users:", error);
+    }
+  };
 
   const handleCreateGroup = async () => {
     const token = getAuthToken();
     if (!token) {
-      alert("User not authenticated. Redirecting to login...");
+      alert("Please log in.");
       navigate("/login");
       return;
     }
-
     if (!groupName) {
-      alert("Please enter a group name");
+      alert("Enter a group name.");
+      return;
+    }
+    if (selectedMembers.length === 0) {
+      alert("Select at least one member.");
       return;
     }
 
     try {
-      await axios.post("http://localhost:8000/api/expensesplit/groups/", { name: groupName }, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      refreshGroups();
-      setGroupName("");
+      const response = await axios.post(
+        "http://localhost:8000/api/expensesplit/groups/",
+        { 
+          name: groupName,
+          members: selectedMembers
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      setGroups([...groups, response.data]); 
+      setGroupName(""); 
+      setSelectedMembers([]);
     } catch (error) {
       console.error("Error creating group:", error);
     }
   };
 
-  const refreshGroups = async () => {
+   const handleAddMembers = async () => {
     const token = getAuthToken();
-    if (!token) return;
-
-    try {
-      const response = await axios.get("http://localhost:8000/api/expensesplit/groups/", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setGroups(response.data);
-    } catch (error) {
-      console.error("Error refreshing groups:", error);
+    if (!token || !selectedGroup || selectedMembers.length === 0) {
+      alert("Select a group and members.");
+      return;
     }
-  };
-
-  const selectGroup = async (group) => {
-    setSelectedGroup(group);
-    const token = getAuthToken();
-    if (!token) return;
-
+  
     try {
-      const [transactionsRes, expensesRes] = await Promise.all([
-        axios.get(`http://localhost:8000/api/expensesplit/groups/${group.id}/transactions/`, {
-          headers: { Authorization: `Bearer ${token}` },
-        }),
-        axios.get(`http://localhost:8000/api/expensesplit/groups/${group.id}/expenses/`, {
-          headers: { Authorization: `Bearer ${token}` },
-        }),
-      ]);
-      setTransactions(transactionsRes.data);
-      setExpenses(expensesRes.data.expenses);
+      await axios.post(
+        `http://localhost:8000/api/expensesplit/groups/${selectedGroup.id}/add_members/`,
+        { members: selectedMembers },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setSelectedMembers([]); 
+      fetchGroups();
     } catch (error) {
-      console.error("Error fetching group details:", error);
+      console.error("Error adding members:", error);
     }
-  };
+  };  
+  
 
   const handleAddTransaction = async () => {
     const token = getAuthToken();
-    if (!token) {
-      alert("User not authenticated. Redirecting to login...");
-      navigate("/login");
-      return;
-    }
-
-    if (!selectedGroup || !transactionData.amount || !transactionData.description) {
-      alert("Please fill in all fields");
-      return;
-    }
+    if (!token || !selectedGroup || !transactionData.amount || !transactionData.payer) return;
 
     try {
       await axios.post(
@@ -114,45 +163,42 @@ const ExpenseSplit = () => {
         {
           amount: transactionData.amount,
           description: transactionData.description,
-          participants: transactionData.participants.map((p) => p.id),
+          payer: transactionData.payer,
+          participants: transactionData.participants.map((p) => p.username),
         },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
-      refreshTransactionsAndExpenses();
-      setTransactionData({ amount: "", description: "", participants: [] });
+      fetchTransactions();
+      setTransactionData({ amount: "", description: "", payer: "", participants: [] });
     } catch (error) {
       console.error("Error adding transaction:", error);
     }
   };
 
-  const refreshTransactionsAndExpenses = async () => {
-    if (!selectedGroup) return;
-    const token = getAuthToken();
-    if (!token) return;
 
+  const handleMarkCompleted = async () => {
+    const token = getAuthToken();
+    if (!token || !selectedGroup) {
+      alert("Please select a group.");
+      return;
+    }
+  
     try {
-      const [transactionsRes, expensesRes] = await Promise.all([
-        axios.get(`http://localhost:8000/api/expensesplit/groups/${selectedGroup.id}/transactions/`, {
-          headers: { Authorization: `Bearer ${token}` },
-        }),
-        axios.get(`http://localhost:8000/api/expensesplit/groups/${selectedGroup.id}/expenses/`, {
-          headers: { Authorization: `Bearer ${token}` },
-        }),
-      ]);
-      setTransactions(transactionsRes.data);
-      setExpenses(expensesRes.data.expenses);
+      await axios.post(
+        `http://localhost:8000/api/expensesplit/groups/${selectedGroup.id}/complete/`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      alert("Marked as completed!");
     } catch (error) {
-      console.error("Error updating transactions and expenses:", error);
+      console.error("Error marking completed:", error);
     }
   };
+  
 
   return (
     <div className="expense-split-container">
       <h2>Expense Split</h2>
-
-      {error && <p style={{ color: "red" }}>{error}</p>}
 
       <div className="add-group">
         <h3>Create Group</h3>
@@ -166,20 +212,53 @@ const ExpenseSplit = () => {
       </div>
 
       <ul className="group-list">
-        {groups.map((group) => (
-          <li key={group.id} onClick={() => selectGroup(group)}>
-            {group.name}
-          </li>
-        ))}
-      </ul>
+  {groups.length === 0 ? (
+    <p>No groups available. Create one!</p>
+  ) : (
+    groups.map((group) => (
+      <li key={group.id} onClick={() => setSelectedGroup(group)}>
+        {group.name}
+      </li>
+    ))
+  )}
+</ul>
 
       {selectedGroup && (
         <div className="group-details">
-          <h2>{selectedGroup.name} Transactions</h2>
+          <h2>{selectedGroup.name} - Transactions</h2>
           <ul>
-            {transactions.map((tx) => (
-              <li key={tx.id}>
-                {tx.description} - ₹{tx.amount} (Paid by {tx.payer.username})
+            {selectedMembers.map((member, index) => (
+              <li key={index}>{member.username}</li>
+            ))}
+          </ul>
+
+          <div className="add-members">
+        <h3>Add Members</h3>
+        <select
+      multiple
+     value={selectedMembers}
+     onChange={(e) => {
+    const options = Array.from(e.target.selectedOptions, (option) => option.value);
+    setSelectedMembers(options);
+  }}
+>
+  {authorizedUsers
+    .filter((user) => !selectedGroup.members.some((member) => member.id === user.id)) // Exclude already added members
+    .map((user) => (
+      <option key={user.id} value={user.id}>
+        {user.username}
+      </option>
+    ))}
+</select>
+
+
+        <button onClick={handleAddMembers}>Add Members</button>
+          </div>
+          <h2>Transactions</h2>
+          <ul>
+            {transactions.map((tx, index) => (
+              <li key={index}>
+                {tx.description} - ₹{tx.amount} (Paid by {tx.payer})
               </li>
             ))}
           </ul>
@@ -194,25 +273,22 @@ const ExpenseSplit = () => {
               }
               placeholder="Amount"
             />
-            <input
-              type="text"
-              value={transactionData.description}
-              onChange={(e) =>
-                setTransactionData({ ...transactionData, description: e.target.value })
-              }
-              placeholder="Description"
-            />
-            <button onClick={handleAddTransaction}>Add</button>
+            
+            <select
+              value={transactionData.payer}
+              onChange={(e) => setTransactionData({ ...transactionData, payer: e.target.value })}
+            >
+              <option value="">Select Payer</option>
+              {selectedMembers.map((member) => (
+                <option key={member.username} value={member.username}>
+                  {member.username}
+                </option>
+              ))}
+            </select>
+            <button onClick={handleAddTransaction}>Add Transaction</button>
           </div>
 
-          <h2>Expense Summary</h2>
-          <ul>
-            {expenses.map((exp, index) => (
-              <li key={index}>
-                {exp.name} - Paid: ₹{exp.paid}, Owes: ₹{exp.owed}, Balance: ₹{exp.net_balance}
-              </li>
-            ))}
-          </ul>
+          <button onClick={handleMarkCompleted}>Mark as Completed</button>
         </div>
       )}
     </div>
@@ -220,4 +296,3 @@ const ExpenseSplit = () => {
 };
 
 export default ExpenseSplit;
-
