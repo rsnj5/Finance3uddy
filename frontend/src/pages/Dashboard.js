@@ -1,5 +1,6 @@
 import { useSelector} from "react-redux";
 import { Link } from "react-router-dom";
+import "../styles/dashboard.css"; 
 
 const Dashboard = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
