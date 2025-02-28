@@ -28,8 +28,12 @@ urlpatterns = [
 
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+<<<<<<< Updated upstream
     path("api/users/authorized/", AuthorizedUsersView.as_view(), name="authorized-users"),  
 
+=======
+    path('api/users/authorized/', AuthorizedUsersView.as_view(), name='authorized-users'),
+>>>>>>> Stashed changes
 
 ]
 

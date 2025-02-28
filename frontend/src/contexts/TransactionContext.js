@@ -90,13 +90,13 @@ export const TransactionProvider = ({ children }) => {
       setCategoryData(response.data);
 
       // Extract categories and amounts
-      const allCategories = response.data.map((item) => item._id);
+      const allCategories = response.data.map((item) => item.category);
       setAllCategories(allCategories);
 
-      const expenseArray = response.data.map((item) => item.totalExpense);
+      const expenseArray = response.data.map((item) => item.total_expense || 0);
       setExpenseArray(expenseArray);
 
-      const incomeArray = response.data.map((item) => item.totalIncome);
+      const incomeArray = response.data.map((item) => item.total_income || 0);
       setIncomeArray(incomeArray);
     } catch (error) {
       console.error("Error fetching category transactions:", error);

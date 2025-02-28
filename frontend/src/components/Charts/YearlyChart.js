@@ -38,7 +38,7 @@ const YearlyChart = ({ yearlyData,thememode }) => {
         backgroundColor: colors.income,
         borderColor: colors.incomeBorder,
         borderWidth: 1,
-        data: yearlyData.map(data=>data.totalIncome),
+        data: yearlyData.map(data=>data.total_income),
       },
        // ------------- Expense ---------------------- 
       {
@@ -46,7 +46,7 @@ const YearlyChart = ({ yearlyData,thememode }) => {
         backgroundColor: colors.expenses,
         borderColor: colors.expensesBorder,
         borderWidth: 1,
-        data: yearlyData.map(data=>data.totalExpense),
+        data: yearlyData.map(data=>data.total_expense),
       },
     ],
   };

@@ -24,7 +24,7 @@ const WeeklyChart = ({ weeklyData, thememode }) => {
   const colors = thememode === 'dark' ? darkTheme : lightTheme;
 
   const data = {
-    labels: weeklyData?.map((data) => data.date),
+    labels: weeklyData?.map((data) => data.week),
     datasets: [
 
          // ------------- Income ------------------  
@@ -33,7 +33,7 @@ const WeeklyChart = ({ weeklyData, thememode }) => {
         backgroundColor: colors.income,
         borderColor: colors.incomeBorder,
         borderWidth: 1,
-        data: weeklyData?.map((data) => data.totalIncome),
+        data: weeklyData?.map((data) => data.total_income),
       },
 
       // ------------- Expense ---------------------- 
@@ -42,7 +42,7 @@ const WeeklyChart = ({ weeklyData, thememode }) => {
         backgroundColor: colors.expenses,
         borderColor: colors.expensesBorder,
         borderWidth: 1,
-        data: weeklyData?.map((data) => data.totalExpense),
+        data: weeklyData?.map((data) => data.total_expense),
       },
     ],
   };

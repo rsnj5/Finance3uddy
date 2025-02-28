@@ -1,4 +1,5 @@
 from django.urls import path
+<<<<<<< Updated upstream
 from .views import GroupListCreateView, TransactionListCreateView, GroupExpenseView, AddMembersToGroupView, MarkGroupAsCompletedView, GroupDetailView
 
 urlpatterns = [
@@ -8,5 +9,15 @@ urlpatterns = [
     path("groups/<int:id>/add_members/", AddMembersToGroupView.as_view(), name="add-members-to-group"),
     path("groups/<int:id>/complete/", MarkGroupAsCompletedView.as_view(), name="mark-group-completed"),
     path("groups/<int:id>/", GroupDetailView.as_view(), name="group-detail"),
+=======
+from .views import GroupListCreateView, TransactionListCreateView, GroupExpenseView,AddMembersToGroupView,AuthorizedUsersView
+
+urlpatterns = [
+    path("groups/", GroupListCreateView.as_view(), name="group-list"),
+    path("groups/<int:group_id>/transactions/", TransactionListCreateView.as_view(), name="transaction-list"),
+    path("groups/<int:group_id>/expenses/", GroupExpenseView.as_view(), name="group-expenses"),
+    path("groups/<int:group_id>/add_members/", AddMembersToGroupView.as_view(), name="add-members"),
+]
+>>>>>>> Stashed changes
 
 ]

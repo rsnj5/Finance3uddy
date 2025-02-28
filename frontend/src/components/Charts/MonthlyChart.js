@@ -40,7 +40,7 @@ const MonthlyChart = ({ monthlyData,thememode }) => {
         backgroundColor: colors.income,
         borderColor: colors.incomeBorder,
         borderWidth: 1,
-        data: monthlyData.map(data=>data.totalIncome),
+        data: monthlyData.map(data=>data.total_income),
       },
       // ------------- Expense ---------------------- 
       {
@@ -48,7 +48,7 @@ const MonthlyChart = ({ monthlyData,thememode }) => {
         backgroundColor: colors.expenses,
         borderColor: colors.expensesBorder,
         borderWidth: 1,
-        data: monthlyData.map(data=>data.totalExpense),
+        data: monthlyData.map(data=>data.total_expense),
       },
     ],
   };

@@ -1,12 +1,12 @@
-
 import React from 'react';
 import { Pie } from 'react-chartjs-2';
 
-const CategoryChart = ({ allCategories, categoryData, thememode }) => {
-  const colors = generateColors(allCategories.length, thememode);
+const CategoryChart = ({ categoryData, thememode }) => {
+  // Filtering data for Income and Expense separately
+  const incomeData = categoryData.filter((data) => data.total_income !== null);
+  const expenseData = categoryData.filter((data) => data.total_expense !== null);
 
-
-  // -------------colors for the lightTheme --------------------
+  // Define light and dark theme colors
   const lightTheme = {
     colorText: 'black',
     income: 'rgba(75,192,192,0.5)',
@@ -14,7 +14,7 @@ const CategoryChart = ({ allCategories, categoryData, thememode }) => {
     expenses: 'rgba(255,99,132,0.5)',
     expensesBorder: 'rgba(255,99,132,1)',
   };
-//  ---------------- colors for the darkTheme -----------------------
+
   const darkTheme = {
     colorText: 'white',
     income: 'rgba(34,139,34,0.5)',
@@ -23,73 +23,78 @@ const CategoryChart = ({ allCategories, categoryData, thememode }) => {
     expensesBorder: 'rgba(165,42,42,1)',
   };
 
-  // ---------- object according to theme --------------
-
+  // Select theme based on mode
   const theme = thememode === 'dark' ? darkTheme : lightTheme;
 
+  // Generate colors dynamically
+  const incomeColors = generateColors(incomeData.length, thememode);
+  const expenseColors = generateColors(expenseData.length, thememode);
 
-  const data = {
-    labels: categoryData.map((data) => data._id),
+  // Prepare income chart data
+  const incomeChartData = {
+    labels: incomeData.map((data) => data.category),
     datasets: [
-      // ------------- Income ------------------
       {
         label: 'Income',
-        backgroundColor: colors.incomeBackgroundColors,
-        borderColor: colors.incomeBorderColors,
+        backgroundColor: incomeColors.backgroundColors,
+        borderColor: incomeColors.borderColors,
         borderWidth: 1,
-        data: categoryData.map((data) => data.totalIncome),
-      },
-      // ------------- Expense ----------------------
-      {
-        label: 'Expenses',
-        backgroundColor: colors.expensesBackgroundColors,
-        borderColor: colors.expensesBorderColors,
-        borderWidth: 1,
-        data: categoryData.map((data) => data.totalExpense),
+        data: incomeData.map((data) => data.total_income),
       },
     ],
   };
 
-
-
-  const options = {
-    maintainAspectRatio: false,
-    responsive: true,
-    height: 300,
-    width: 300,
+  // Prepare expense chart data
+  const expenseChartData = {
+    labels: expenseData.map((data) => data.category),
+    datasets: [
+      {
+        label: 'Expenses',
+        backgroundColor: expenseColors.backgroundColors,
+        borderColor: expenseColors.borderColors,
+        borderWidth: 1,
+        data: expenseData.map((data) => data.total_expense),
+      },
+    ],
   };
 
-  // ----------- using the pre-existing obj to set the properties of chart -----------
-  const option = {
-    scales: {
-      x: {
-        ticks: {
-          color: theme.colorText,
-        },
-      },
-      y: {
-        ticks: {
-          color: theme.colorText,
-        },
-      },
-    },
+  // Chart options
+  const options = {
+    maintainAspectRatio: true,
+    responsive: true,
+    aspectRatio: 2, // Adjust for smaller size
     plugins: {
       legend: {
+        position: 'bottom',
         labels: {
           color: theme.colorText,
+          font: { size: 10 },
         },
       },
     },
   };
 
-  // ------------ Pie Chart component ---------------------
-
   return (
-  <div className='w-[400px] h-[500px] p-6 shadow-md rounded-lg dark:text-white m-auto' style={{backgroundColor:thememode==='dark'? "#2c3034" : "white"}}>
-  <p className='w-full text-center font-bold'>Category wise data</p>
-  <Pie data={data} options={options} option={option} />
-  </div>
-  )
+    <div className="flex flex-wrap justify-center gap-6">
+      {/* Income Pie Chart */}
+      <div
+        className="w-[250px] h-[250px] p-4 shadow-md rounded-lg dark:text-white"
+        style={{ backgroundColor: thememode === 'dark' ? '#2c3034' : 'white' }}
+      >
+        <p className="w-full text-center text-sm font-bold">Income Distribution</p>
+        <Pie data={incomeChartData} options={options} />
+      </div>
+
+      {/* Expense Pie Chart */}
+      <div
+        className="w-[250px] h-[250px] p-4 shadow-md rounded-lg dark:text-white"
+        style={{ backgroundColor: thememode === 'dark' ? '#2c3034' : 'white' }}
+      >
+        <p className="w-full text-center text-sm font-bold">Expense Distribution</p>
+        <Pie data={expenseChartData} options={options} />
+      </div>
+    </div>
+  );
 };
 
 export default CategoryChart;
@@ -111,9 +116,8 @@ const generateColors = (count, thememode) => {
   }
 
   return {
-    incomeBackgroundColors: backgroundColors,
-    incomeBorderColors: borderColors,
-    expensesBackgroundColors: backgroundColors,
-    expensesBorderColors: borderColors,
+    backgroundColors,
+    borderColors,
   };
 };
+
