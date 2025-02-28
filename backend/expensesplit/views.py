@@ -24,25 +24,15 @@ class GroupListCreateView(generics.ListCreateAPIView):
         return Group.objects.filter(members=self.request.user)
 
     def perform_create(self, serializer):
-        members_data = self.request.data.get("members", [])  # Expecting a list of usernames
+        members_data = self.request.data.get("members", [])  
         group = serializer.save()
-<<<<<<< Updated upstream
-        group.members.add(self.request.user)  # Add the requesting user as a member
+        group.members.add(self.request.user)  
 
         if members_data:
             members = User.objects.filter(id__in=members_data)
             if members.count() != len(members_data):
                 raise serializers.ValidationError("One or more members do not exist.")
             group.members.add(*members)
-=======
-        group.members.add(self.request.user)  # Add the creator to the group
-
-        if members_data:
-            members = User.objects.filter(username__in=members_data)  # Fetch users by usernames
-            if not members.exists():
-                raise serializers.ValidationError("One or more members do not exist.")
-            group.members.add(*members)  # Add the selected members to the group
->>>>>>> Stashed changes
 
 class AddMembersToGroupView(APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -50,41 +40,19 @@ class AddMembersToGroupView(APIView):
     def post(self, request, id):
         group = get_object_or_404(Group, id=id)
 
-        # Ensure the requesting user is a member of the group
         if request.user not in group.members.all():
             return Response({"error": "You are not authorized to add members."}, status=403)
 
-<<<<<<< Updated upstream
-        members_data = request.data.get("members", [])  # Expecting a list of user IDs
-=======
-        # Get the list of usernames from the request
-        members_data = request.data.get("members", [])  # Expecting a list of usernames
->>>>>>> Stashed changes
-
+        members_data = request.data.get("members", [])  
         if not members_data:
             return Response({"error": "No members provided."}, status=400)
 
-<<<<<<< Updated upstream
         members = User.objects.filter(id__in=members_data)
         if members.count() != len(members_data):
-=======
-        # Fetch users by their usernames
-        members = User.objects.filter(username__in=members_data)
-        if not members.exists():
->>>>>>> Stashed changes
             return Response({"error": "One or more users not found."}, status=400)
 
-        # Add the users to the group
         group.members.add(*members)
-<<<<<<< Updated upstream
         return Response({"message": "Members added successfully.", "members": [m.username for m in members]})
-=======
-
-        return Response({
-            "message": "Members added successfully.",
-            "members": [m.username for m in members]
-        })
->>>>>>> Stashed changes
 
 class TransactionListCreateView(generics.ListCreateAPIView):
     serializer_class = TransactionSerializer
@@ -139,7 +107,6 @@ class GroupExpenseView(APIView):
             data["net_balance"] = data["paid"] - data["owed"]
 
         return Response({"group": group.name, "expenses": list(member_expenses.values())})
-<<<<<<< Updated upstream
 
 class MarkGroupAsCompletedView(APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -167,5 +134,3 @@ class GroupDetailView(RetrieveAPIView):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
     lookup_field = "id" 
-=======
->>>>>>> Stashed changes
