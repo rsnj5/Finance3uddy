@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/Transaction.css";
 import { TransactionContext } from "../contexts/TransactionContext";
+import Papa from "papaparse";
 
 const Transactions = () => {
   const { transactions, fetchTransactions, addTransaction, updateTransaction, deleteTransaction } = useContext(TransactionContext);
@@ -9,6 +10,7 @@ const Transactions = () => {
   const [expenseData, setExpenseData] = useState({ category: "", amount: "", desc: "" });
   const [showEdit, setShowEdit] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState(null);
+  const [csvFile, setCsvFile] = useState(null);
 
   const navigate = useNavigate();
   const getAuthToken = () => localStorage.getItem("access");
@@ -16,6 +18,52 @@ const Transactions = () => {
   useEffect(() => {
     fetchTransactions();
   }, []);
+  const handleCSVUpload = (event) => {
+    setCsvFile(event.target.files[0]);
+  };
+
+  const handleCSVImport = async () => {
+    if (!csvFile) {
+      alert("Please upload a CSV file.");
+      return;
+    }
+  
+    Papa.parse(csvFile, {
+      complete: async (result) => {
+        const parsedData = result.data.slice(1); // Remove headers
+        const transactionsToAdd = parsedData
+          .map((row) => {
+            const [date, type, category, amount, desc] = row;
+  
+            // Check if the date is valid
+            const parsedDate = new Date(date);
+            if (isNaN(parsedDate.getTime())) {
+              console.error(`Invalid date format: ${date}`);
+              return null; // Skip this row if the date is invalid
+            }
+  
+            return {
+              date: parsedDate.toISOString(),
+              type: type.toLowerCase(),
+              category,
+              amount: parseFloat(amount),
+              desc,
+            };
+          })
+          .filter((transaction) => transaction && transaction.category && transaction.amount && transaction.desc);
+  
+        for (const transaction of transactionsToAdd) {
+          await addTransaction(transaction);
+        }
+  
+        fetchTransactions();
+        alert("Transactions imported successfully!");
+      },
+      header: false,
+    });
+  };
+
+
 
   const handleChange = (e, type) => {
     const { name, value } = e.target;
@@ -92,6 +140,11 @@ const Transactions = () => {
         </p>
       ) : (
         <>
+
+     <div className="csv-upload">
+        <input type="file" accept=".csv" onChange={handleCSVUpload} />
+        <button className="btn upload" onClick={handleCSVImport}>Import CSV</button>
+      </div>
           <div className="add-transaction income">
             <h3>Add Income</h3>
             <select name="category" value={incomeData.category} onChange={(e) => handleChange(e, "income")}>

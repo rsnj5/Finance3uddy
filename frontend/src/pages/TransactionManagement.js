@@ -51,7 +51,32 @@ const TransactionManagement = () => {
     }
     return new Date(b.date) - new Date(a.date);
   });
+  const exportToCSV = () => {
+    const csvRows = [];
+    const headers = ["Date", "Type", "Category", "Amount", "Description"];
+    csvRows.push(headers.join(","));
 
+    sortedTransactions.forEach(transaction => {
+      const row = [
+        new Date(transaction.date).toLocaleDateString(),
+        transaction.type,
+        transaction.category,
+        transaction.amount,
+        `"${transaction.desc}"`,
+      ];
+      csvRows.push(row.join(","));
+    });
+
+    const csvString = csvRows.join("\n");
+    const blob = new Blob([csvString], { type: "text/csv" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "transactions.csv";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+  
   return (
     <div className="transaction-management-container">
       <h2>Transaction Management</h2>
@@ -84,8 +109,12 @@ const TransactionManagement = () => {
           <option value="amount">Sort by Amount</option>
           <option value="category">Sort by Category</option>
         </select>
+        
       </div>
-      
+      <div className="export">
+        <button onClick={exportToCSV}>Export to CSV</button>
+        </div>
+        
       <div className="transactions-list">
         {sortedTransactions.length > 0 ? (
           sortedTransactions.map(transaction => (
