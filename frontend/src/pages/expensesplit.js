@@ -20,11 +20,12 @@ const ExpenseSplit = () => {
 
   const navigate = useNavigate();
   const getAuthToken = () => localStorage.getItem("access");
-
+  
   useEffect(() => {
     fetchGroups();
     fetchAuthorizedUsers();
   }, []);
+
   useEffect(() => {
     if (selectedGroup) {
       fetchTransactions();
@@ -35,20 +36,16 @@ const ExpenseSplit = () => {
   const fetchGroups = async () => {
     const token = getAuthToken();
     if (!token) return;
-  
+
     try {
       const response = await axios.get("http://localhost:8000/api/expensesplit/groups/", {
         headers: { Authorization: `Bearer ${token}` },
       });
-  
-      console.log("Fetched Groups:", response.data); // Debugging
       setGroups(response.data);
     } catch (error) {
       console.error("Error fetching groups:", error);
     }
   };
-  
-  
 
   const fetchExpenses = async () => {
     const token = getAuthToken();
@@ -67,7 +64,7 @@ const ExpenseSplit = () => {
     }
   };
 
-const fetchTransactions = async () => {
+  const fetchTransactions = async () => {
     const token = getAuthToken();
     if (!token || !selectedGroup) return;
 
@@ -132,27 +129,32 @@ const fetchTransactions = async () => {
     }
   };
 
-   const handleAddMembers = async () => {
+  const handleAddMembers = async () => {
     const token = getAuthToken();
     if (!token || !selectedGroup || selectedMembers.length === 0) {
       alert("Select a group and members.");
       return;
     }
-  
+
     try {
       await axios.post(
         `http://localhost:8000/api/expensesplit/groups/${selectedGroup.id}/add_members/`,
         { members: selectedMembers },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      setSelectedMembers([]); 
-      fetchGroups();
+      const updatedGroupResponse = await axios.get(
+        `http://localhost:8000/api/expensesplit/groups/${selectedGroup.id}/`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+  
+      setSelectedGroup(updatedGroupResponse.data);
+  
+      setSelectedMembers([]);
     } catch (error) {
       console.error("Error adding members:", error);
     }
-  };  
+  };
   
-
   const handleAddTransaction = async () => {
     const token = getAuthToken();
     if (!token || !selectedGroup || !transactionData.amount || !transactionData.payer) return;
@@ -164,7 +166,7 @@ const fetchTransactions = async () => {
           amount: transactionData.amount,
           description: transactionData.description,
           payer: transactionData.payer,
-          participants: transactionData.participants.map((p) => p.username),
+          participants: transactionData.participants,
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -175,14 +177,13 @@ const fetchTransactions = async () => {
     }
   };
 
-
   const handleMarkCompleted = async () => {
     const token = getAuthToken();
     if (!token || !selectedGroup) {
       alert("Please select a group.");
       return;
     }
-  
+
     try {
       await axios.post(
         `http://localhost:8000/api/expensesplit/groups/${selectedGroup.id}/complete/`,
@@ -190,107 +191,156 @@ const fetchTransactions = async () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       alert("Marked as completed!");
+      fetchGroups();
     } catch (error) {
       console.error("Error marking completed:", error);
     }
   };
-  
 
   return (
     <div className="expense-split-container">
-      <h2>Expense Split</h2>
+      <div className="animated-background"></div>
 
-      <div className="add-group">
-        <h3>Create Group</h3>
-        <input
-          type="text"
-          value={groupName}
-          onChange={(e) => setGroupName(e.target.value)}
-          placeholder="Enter group name"
-        />
-        <button onClick={handleCreateGroup}>Create</button>
-      </div>
+     
 
-      <ul className="group-list">
-  {groups.length === 0 ? (
-    <p>No groups available. Create one!</p>
-  ) : (
-    groups.map((group) => (
-      <li key={group.id} onClick={() => setSelectedGroup(group)}>
-        {group.name}
-      </li>
-    ))
-  )}
-</ul>
+      <div className="dashboard-content">
+        <h1>Expense Split</h1>
 
-      {selectedGroup && (
-        <div className="group-details">
-          <h2>{selectedGroup.name} - Transactions</h2>
-          <ul>
-            {selectedMembers.map((member, index) => (
-              <li key={index}>{member.username}</li>
+        <div className="create-group-section">
+          <h2>Create a New Group</h2>
+          <input
+            type="text"
+            value={groupName}
+            onChange={(e) => setGroupName(e.target.value)}
+            placeholder="Enter group name"
+          />
+          <select
+            multiple
+            value={selectedMembers}
+            onChange={(e) => {
+              const options = Array.from(e.target.selectedOptions, (option) => option.value);
+              setSelectedMembers(options);
+            }}
+          >
+            {authorizedUsers.map((user) => (
+              <option key={user.id} value={user.id}>
+                {user.username}
+              </option>
             ))}
-          </ul>
-
-          <div className="add-members">
-        <h3>Add Members</h3>
-        <select
-      multiple
-     value={selectedMembers}
-     onChange={(e) => {
-    const options = Array.from(e.target.selectedOptions, (option) => option.value);
-    setSelectedMembers(options);
-  }}
->
-  {authorizedUsers
-    .filter((user) => !selectedGroup.members.some((member) => member.id === user.id)) // Exclude already added members
-    .map((user) => (
-      <option key={user.id} value={user.id}>
-        {user.username}
-      </option>
-    ))}
-</select>
-
-
-        <button onClick={handleAddMembers}>Add Members</button>
-          </div>
-          <h2>Transactions</h2>
-          <ul>
-            {transactions.map((tx, index) => (
-              <li key={index}>
-                {tx.description} - ₹{tx.amount} (Paid by {tx.payer})
-              </li>
-            ))}
-          </ul>
-
-          <div className="add-transaction">
-            <h3>Add Transaction</h3>
-            <input
-              type="number"
-              value={transactionData.amount}
-              onChange={(e) =>
-                setTransactionData({ ...transactionData, amount: e.target.value })
-              }
-              placeholder="Amount"
-            />
-            
-            <select
-              value={transactionData.payer}
-              onChange={(e) => setTransactionData({ ...transactionData, payer: e.target.value })}
-            >
-              <option value="">Select Payer</option>
-              {selectedMembers.map((member) => (
-                <option key={member.username} value={member.username}>
-                  {member.username}
-                </option>
-              ))}
-            </select>
-            <button onClick={handleAddTransaction}>Add Transaction</button>
-          </div>
-
-          <button onClick={handleMarkCompleted}>Mark as Completed</button>
+          </select>
+          <button onClick={handleCreateGroup}>Create Group</button>
         </div>
-      )}
+
+        <div className="group-list-section">
+          <h2>Your Groups</h2>
+          {groups.length === 0 ? (
+            <p>No groups available. Create one!</p>
+          ) : (
+            <ul>
+              {groups.map((group) => (
+                <li key={group.id} onClick={() => setSelectedGroup(group)}>
+                  {group.name} {group.completed ? "(Completed)" : "not"}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        {selectedGroup && (
+          <div className="group-details-section">
+            <h2>{selectedGroup.name} - Transactions</h2>
+
+            <div className="add-members-section">
+              <h3>Add Members</h3>
+              <select
+                multiple
+                value={selectedMembers}
+                onChange={(e) => {
+                  const options = Array.from(e.target.selectedOptions, (option) => option.value);
+                  setSelectedMembers(options);
+                }}
+              >
+                
+                {authorizedUsers
+                  .filter((user) => !selectedGroup.members.some((member) => member.id === user.id))
+                  .map((user) => (
+                    <option key={user.id} value={user.id}>
+                      {user.username}
+                    </option>
+                  ))}
+              </select>
+              <button onClick={handleAddMembers}>Add Members</button>
+
+            </div>
+            <div className="show-members-section">
+            {selectedMembers.map((member, index) => (
+          <div key={index}>{member}</div>
+           ))}
+         </div>
+
+            <div className="transactions-section">
+              <h3>Transactions</h3>
+              <ul>
+                {transactions.map((tx, index) => (
+                  <li key={index}>
+                    {tx.description} - ₹{tx.amount} (Paid by {tx.payer})
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="add-transaction-section">
+              <h3>Add Transaction</h3>
+              <input
+                type="number"
+                value={transactionData.amount}
+                onChange={(e) =>
+                  setTransactionData({ ...transactionData, amount: e.target.value })
+                }
+                placeholder="Amount"
+              />
+              <input
+                type="text"
+                value={transactionData.description}
+                onChange={(e) =>
+                  setTransactionData({ ...transactionData, description: e.target.value })
+                }
+                placeholder="Description"
+              />
+              <select
+                value={transactionData.payer}
+                onChange={(e) => setTransactionData({ ...transactionData, payer: e.target.value })}
+              >
+                <option value="">Select Payer</option>
+                {selectedGroup.members.map((member) => (
+                  <option key={member.id} value={member.id}>
+                    {member.username}
+                  </option>
+                ))}
+              </select>
+              <select
+                multiple
+                value={transactionData.participants}
+                onChange={(e) => {
+                  const options = Array.from(e.target.selectedOptions, (option) => option.value);
+                  setTransactionData({ ...transactionData, participants: options });
+                }}
+              >
+                {selectedGroup.members.map((member) => (
+                  <option key={member.id} value={member.id}>
+                    {member.username}
+                  </option>
+                ))}
+              </select>
+              <button onClick={handleAddTransaction}>Add Transaction</button>
+            </div>
+
+            <div className="mark-completed-section">
+              <button onClick={handleMarkCompleted}>Mark as Completed</button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

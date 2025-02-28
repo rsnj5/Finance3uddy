@@ -1,38 +1,230 @@
-.dashboard-container {
-    text-align: center;
-    padding: 50px;
-    background-color: #f5f5f5;
-    min-height: 100vh;
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background: #f4f4f9;
+}
+
+.dashboard {
+  position: relative;
+  min-height: 100vh;
+  padding: 20px;
+  z-index: 2;
+}
+
+.dashboard-content {
+  position: relative;
+  z-index: 3;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-title {
+  text-align: center;
+  color: #333;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.animated-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(270deg, #6a11cb, #2575fc, #6a11cb, #2575fc);
+  background-size: 400% 400%;
+  animation: gradientMove 10s ease infinite;
+  z-index: 1;
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
   }
-  
-  h1 {
-    font-size: 2rem;
-    color: #333;
-    margin-bottom: 20px;
+  50% {
+    background-position: 100% 50%;
   }
-  
-  .btn {
-    display: inline-block;
-    margin: 10px;
-    padding: 12px 20px;
-    font-size: 1rem;
-    text-decoration: none;
-    color: #fff;
-    border-radius: 8px;
-    transition: background 0.3s ease-in-out;
+  100% {
+    background-position: 0% 50%;
   }
-  
-  .add {
-    background-color: #007bff;
+}
+
+
+
+.finance-icon {
+  position: absolute;
+  font-size: 3rem;
+  opacity: 0.3;
+  animation: float 6s infinite ease-in-out;
+}
+
+.coin {
+  top: 10%;
+  left: 5%;
+  animation-delay: 0s;
+}
+
+.graph {
+  top: 20%;
+  right: 10%;
+  animation-delay: 2s;
+}
+
+.wallet {
+  top: 50%;
+  left: 15%;
+  animation-delay: 4s;
+}
+
+.chart {
+  top: 70%;
+  right: 20%;
+  animation-delay: 6s;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) rotate(0deg);
   }
-  
-  .add:hover {
-    background-color: #0056b3;
+  50% {
+    transform: translateY(-20px) rotate(10deg);
   }
-  
-  p {
-    font-size: 1.2rem;
-    color: #555;
-    margin-top: 20px;
+  100% {
+    transform: translateY(0) rotate(0deg);
   }
-  
+}
+
+.cards-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 30%;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card h2 {
+  font-size: 1.5rem;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 2rem;
+  color: #333;
+  font-weight: bold;
+}
+
+.card-button {
+  background: #2575fc;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.card-button:hover {
+  background: #6a11cb;
+}
+
+.animated-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.charts-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.chart-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 48%;
+  text-align: center;
+}
+
+.chart-placeholder {
+  height: 200px;
+  background: #f0f0f0;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.transactions-container {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 40px;
+}
+
+.transactions-container h2 {
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.status-completed {
+  color: green;
+}
+
+.status-pending {
+  color: orange;
+}
+
+.progress-container {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.progress-bar {
+  background: #f0f0f0;
+  border-radius: 10px;
+  height: 20px;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.progress-fill {
+  background: #2575fc;
+  border-radius: 10px;
+  height: 100%;
+  transition: width 0.5s ease;
+}
+
+.progress-bar span {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #333;
+}

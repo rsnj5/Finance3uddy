@@ -122,37 +122,50 @@ const GoalTracking = () => {
       <div className="add-goal">
         <h3>Add Goal</h3>
         <input type="text" name="title" placeholder="Title" value={goalData.title} onChange={handleChange} />
-        <input type="number" name="current_amount" placeholder="Current_ Amount" value={goalData.current_amount} onChange={handleChange} />
+        <input type="number" name="current_amount" placeholder="Current Amount" value={goalData.current_amount} onChange={handleChange} />
         <input type="number" name="target_amount" placeholder="Target Amount" value={goalData.target_amount} onChange={handleChange} />
         <input type="date" name="target_date" value={goalData.target_date} onChange={handleChange} />
         <button onClick={handleAddGoal}>Add Goal</button>
       </div>
 
-      {goals.map((goal) => (
-        <div key={goal.id} className="goal-card">
-          <h3>{goal.title} - ₹{goal.current_amount} / ₹{goal.target_amount}</h3>
-          <p>Target Date: {goal.target_date}</p>
-          <p>Status: {goal.current_amount>=goal.target_amount ? "Completed" : "In Progress"}</p>
-          <button onClick={() => { setShowEdit(true); setEditingGoal({ ...goal }); }}>Edit</button>
-          <button onClick={() => {
-          const confirmDelete = window.confirm(`Are you sure you want to delete the goal: "${goal.title}"?`);
-         if (confirmDelete) {
-          handleDelete(goal.id);
-      }
-    }}>Delete</button>
-        </div>
-      ))}
+      <div className="goals-list">
+        {goals.map((goal) => (
+          <div key={goal.id} className="goal-card">
+            <h3>{goal.title} - ₹{goal.current_amount} / ₹{goal.target_amount}</h3>
+            <p>Target Date: {goal.target_date}</p>
+            <p>Status: {goal.current_amount>=goal.target_amount ? "Completed" : "In Progress"}</p>
+            <div className="progress-bar">
+              <div 
+                className="progress" 
+                style={{ width: `${(goal.current_amount / goal.target_amount) * 100}%` }}
+              ></div>
+            </div>
+
+            <button onClick={() => { setShowEdit(true); setEditingGoal({ ...goal }); }}>Edit</button>
+            <button
+            className="delete-button" 
+             onClick={() => {
+              const confirmDelete = window.confirm(`Are you sure you want to delete the goal: "${goal.title}"?`);
+              if (confirmDelete) {
+                handleDelete(goal.id);
+              }
+            }}>Delete</button>
+            
+          </div>
+        ))}
+      </div>
 
       {showEdit && (
-        <div className="modal">
-          <h3>Edit Goal</h3>
-
-          <input type="text" name="title" value={editingGoal?.title} onChange={(e) => setEditingGoal({ ...editingGoal, title: e.target.value })} />
-          <input type="number" name="current_amount" value={editingGoal?.current_amount} onChange={(e) => setEditingGoal({ ...editingGoal, current_amount: e.target.value })} />
-          <input type="number" name="target_amount" value={editingGoal?.target_amount} onChange={(e) => setEditingGoal({ ...editingGoal, target_amount: e.target.value })} />
-          <input type="date" name="target_date" value={editingGoal?.target_date} onChange={(e) => setEditingGoal({ ...editingGoal, target_date: e.target.value })} />
-          <button onClick={handleUpdate}>Save</button>
-          <button onClick={() => setShowEdit(false)}>Cancel</button>
+        <div className="modal-overlay">
+          <div className="modal">
+            <h3>Edit Goal</h3>
+            <input type="text" name="title" value={editingGoal?.title} onChange={(e) => setEditingGoal({ ...editingGoal, title: e.target.value })} />
+            <input type="number" name="current_amount" value={editingGoal?.current_amount} onChange={(e) => setEditingGoal({ ...editingGoal, current_amount: e.target.value })} />
+            <input type="number" name="target_amount" value={editingGoal?.target_amount} onChange={(e) => setEditingGoal({ ...editingGoal, target_amount: e.target.value })} />
+            <input type="date" name="target_date" value={editingGoal?.target_date} onChange={(e) => setEditingGoal({ ...editingGoal, target_date: e.target.value })} />
+            <button onClick={handleUpdate}>Save</button>
+            <button onClick={() => setShowEdit(false)}>Cancel</button>
+          </div>
         </div>
       )}
     </div>
