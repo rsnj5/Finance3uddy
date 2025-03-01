@@ -10,6 +10,7 @@ const Dues = ({ user }) => {
     amount: "",
     to_whom: "",
     recurring: "daily",
+    next_reminder_date: "",
   });
   const [showEdit, setShowEdit] = useState(false);
   const [editingDue, setEditingDue] = useState(null);
@@ -64,6 +65,7 @@ const Dues = ({ user }) => {
         amount: "",
         to_whom: "",
         recurring: "daily",
+        next_reminder_date: "",
       });
     } catch (error) {
       console.error("Add Due failed:", error.response?.data || error);
@@ -137,6 +139,7 @@ const Dues = ({ user }) => {
           <div key={due.id} className="due-card">
             <h3>{due.title} - {due.amount}</h3>
             <p>Due Date: {due.due_date}</p>
+            <p>Next Reminder: {due.next_reminder_date}</p>
             <p>To Whom: {due.to_whom}</p>
             <p>Recurring: {due.recurring}</p>
             <button onClick={() => { setShowEdit(true); setEditingDue({ ...due }); }}>Edit</button>
