@@ -15,6 +15,9 @@ class DueListCreateView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+        if not due.next_reminder_date:
+            due.next_reminder_date = due.created_at.date()
+            due.save()
 
 class DueRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     """
