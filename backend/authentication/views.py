@@ -23,4 +23,3 @@ class RegisterUserView(generics.CreateAPIView):
 
 token_obtain_view = TokenObtainPairView.as_view()
 token_refresh_view = TokenRefreshView.as_view()
-

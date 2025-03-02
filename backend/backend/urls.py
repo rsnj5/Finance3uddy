@@ -32,4 +32,3 @@ urlpatterns = [
     path("api/users/authorized/", AuthorizedUsersView.as_view(), name="authorized-users"),  
 
 ]
-

@@ -1,0 +1,181 @@
+/* Budgeting Page Container */
+.budgeting-container {
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: rgb(55, 158, 253);
+    min-height: 100vh;
+  }
+  
+  /* Heading */
+  .budgeting-container h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 2rem;
+    animation: fadeInDown 1s ease-in-out;
+  }
+  
+  /* Budget Overview Section */
+  .budget-overview {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    animation: slideInLeft 1s ease-in-out;
+  }
+  
+  .budget-overview h3 {
+    font-size: 2.2rem;
+    color: #0e161f;
+    margin-bottom: 2rem;
+  }
+  
+  .budget-overview .stats {
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+  }
+  
+  .budget-overview .stats p {
+    font-size: 1.2rem;
+    color: #1e2923;
+    background: #36e4cd;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    flex: 1;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .budget-overview .stats p:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Spending Chart Section */
+  .spending-chart {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    animation: slideInRight 1s ease-in-out;
+  }
+  
+  .spending-chart h3 {
+    font-size: 2.2rem;
+    color: #131e29;
+    margin-bottom: 2rem;
+  }
+  
+  /* Monthly Trends Section */
+  .monthly-trends {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    animation: slideInLeft 1s ease-in-out;
+  }
+  
+  .monthly-trends h3 {
+    font-size: 2.2rem;
+    color: #171731;
+    margin-bottom: 2rem;
+  }
+  
+  /* Suggestions Section */
+  .suggestions {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    animation: slideInRight 1s ease-in-out;
+  }
+  
+  .suggestions h3 {
+    font-size: 2.2rem;
+    color: #34495e;
+    margin-bottom: 2rem;
+  }
+  
+  .suggestions p {
+    font-size: 1.1rem;
+    color: #f34906;
+    background: #20cfb8;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    margin: 0.5rem 0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .suggestions p:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Animations */
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  /* Recharts Customization */
+  .recharts-wrapper {
+    margin: 0 auto;
+  }
+  
+  .recharts-tooltip {
+    background: #ffffff !important;
+    border: 1px solid #ddd !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+    padding: 0.5rem !important;
+  }
+  
+  .recharts-legend-item-text {
+    color: #555 !important;
+    font-size: 0.9rem !important;
+  }
+  
+  .recharts-cartesian-axis-tick-value {
+    fill: #555 !important;
+    font-size: 0.9rem !important;
+  }
+  
+  .recharts-bar-rectangle {
+    transition: fill 0.3s ease;
+  }
+  
+  .recharts-bar-rectangle:hover {
+    fill: #4ECDC4 !important;
+  }
