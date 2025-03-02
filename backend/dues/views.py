@@ -11,13 +11,12 @@ class DueListCreateView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
+        # Return dues only for the authenticated user
         return Due.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
+        # Automatically set the user to the authenticated user
         serializer.save(user=self.request.user)
-        if not due.next_reminder_date:
-            due.next_reminder_date = due.created_at.date()
-            due.save()
 
 class DueRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     """
@@ -27,4 +26,5 @@ class DueRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticated, IsOwner]
 
     def get_queryset(self):
+        # Return dues only for the authenticated user
         return Due.objects.filter(user=self.request.user)
