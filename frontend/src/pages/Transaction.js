@@ -30,16 +30,15 @@ const Transactions = () => {
   
     Papa.parse(csvFile, {
       complete: async (result) => {
-        const parsedData = result.data.slice(1); // Remove headers
+        const parsedData = result.data.slice(1); 
         const transactionsToAdd = parsedData
           .map((row) => {
             const [date, type, category, amount, desc] = row;
   
-            // Check if the date is valid
             const parsedDate = new Date(date);
             if (isNaN(parsedDate.getTime())) {
               console.error(`Invalid date format: ${date}`);
-              return null; // Skip this row if the date is invalid
+              return null; 
             }
   
             return {

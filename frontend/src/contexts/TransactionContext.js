@@ -89,7 +89,6 @@ export const TransactionProvider = ({ children }) => {
       });
       setCategoryData(response.data);
 
-      // Extract categories and amounts
       const allCategories = response.data.map((item) => item.category);
       setAllCategories(allCategories);
 

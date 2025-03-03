@@ -2,11 +2,9 @@ import React from 'react';
 import { Pie } from 'react-chartjs-2';
 
 const CategoryChart = ({ categoryData, thememode }) => {
-  // Filtering data for Income and Expense separately
   const incomeData = categoryData.filter((data) => data.total_income !== null);
   const expenseData = categoryData.filter((data) => data.total_expense !== null);
 
-  // Define light and dark theme colors
   const lightTheme = {
     colorText: 'black',
     income: 'rgba(75,192,192,0.5)',
@@ -23,14 +21,11 @@ const CategoryChart = ({ categoryData, thememode }) => {
     expensesBorder: 'rgba(165,42,42,1)',
   };
 
-  // Select theme based on mode
   const theme = thememode === 'dark' ? darkTheme : lightTheme;
 
-  // Generate colors dynamically
   const incomeColors = generateColors(incomeData.length, thememode);
   const expenseColors = generateColors(expenseData.length, thememode);
 
-  // Prepare income chart data
   const incomeChartData = {
     labels: incomeData.map((data) => data.category),
     datasets: [
@@ -44,7 +39,6 @@ const CategoryChart = ({ categoryData, thememode }) => {
     ],
   };
 
-  // Prepare expense chart data
   const expenseChartData = {
     labels: expenseData.map((data) => data.category),
     datasets: [
@@ -58,11 +52,10 @@ const CategoryChart = ({ categoryData, thememode }) => {
     ],
   };
 
-  // Chart options
   const options = {
     maintainAspectRatio: true,
     responsive: true,
-    aspectRatio: 2, // Adjust for smaller size
+    aspectRatio: 2, 
     plugins: {
       legend: {
         position: 'bottom',
@@ -76,7 +69,6 @@ const CategoryChart = ({ categoryData, thememode }) => {
 
   return (
     <div className="flex flex-wrap justify-center gap-6">
-      {/* Income Pie Chart */}
       <div
         className="w-[250px] h-[250px] p-4 shadow-md rounded-lg dark:text-white"
         style={{ backgroundColor: thememode === 'dark' ? '#2c3034' : 'white' }}
@@ -85,7 +77,6 @@ const CategoryChart = ({ categoryData, thememode }) => {
         <Pie data={incomeChartData} options={options} />
       </div>
 
-      {/* Expense Pie Chart */}
       <div
         className="w-[250px] h-[250px] p-4 shadow-md rounded-lg dark:text-white"
         style={{ backgroundColor: thememode === 'dark' ? '#2c3034' : 'white' }}
@@ -99,7 +90,6 @@ const CategoryChart = ({ categoryData, thememode }) => {
 
 export default CategoryChart;
 
-// Function to generate dynamic colors
 const generateColors = (count, thememode) => {
   const backgroundColors = [];
   const borderColors = [];

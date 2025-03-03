@@ -3,7 +3,6 @@ import { Bar } from 'react-chartjs-2';
 
 const WeeklyChart = ({ weeklyData, thememode }) => {
   console.log(weeklyData)
-   // -------------colors for the lightTheme -------------------- 
   const lightTheme = {
     colorText: 'black',
     income: 'rgba(75,192,192,0.5)', 
@@ -11,7 +10,6 @@ const WeeklyChart = ({ weeklyData, thememode }) => {
     expenses: 'rgba(255,99,132,0.5)',
     expensesBorder: 'rgba(255,99,132,1)',
   };
-  //  ---------------- colors for the darkTheme ----------------------- 
 
   const darkTheme = {
     colorText: 'white',
@@ -20,14 +18,12 @@ const WeeklyChart = ({ weeklyData, thememode }) => {
     expenses: 'rgba(165,42,42,0.5)',
     expensesBorder: 'rgba(165,42,42,1)',
   };
-     // ---------- object according to theme -------------- 
   const colors = thememode === 'dark' ? darkTheme : lightTheme;
 
   const data = {
     labels: weeklyData?.map((data) => data.week),
     datasets: [
 
-         // ------------- Income ------------------  
       {
         label: 'Income',
         backgroundColor: colors.income,
@@ -36,7 +32,6 @@ const WeeklyChart = ({ weeklyData, thememode }) => {
         data: weeklyData?.map((data) => data.total_income),
       },
 
-      // ------------- Expense ---------------------- 
       {
         label: 'Expenses',
         backgroundColor: colors.expenses,
@@ -47,7 +42,6 @@ const WeeklyChart = ({ weeklyData, thememode }) => {
     ],
   };
 
-  // Using the plugins to change the color in dark mode
   const options = {
     scales: {
       x: {

@@ -1,106 +1,290 @@
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f7f6;
+  margin: 0;
+  padding: 0;
+  color: #333;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
 .expense-split-container {
-    max-width: 800px;
-    margin: 30px auto;
-    padding: 20px;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    font-family: "Arial", sans-serif;
-    color: #333;
+  position: relative;
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
   }
-  
-  h2, h3 {
-    text-align: center;
-    color: #444;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  input, select {
-    width: 100%;
-    padding: 10px;
-    margin: 8px 0;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 16px;
+}
+
+.animated-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  z-index: -1;
+  animation: gradientAnimation 10s ease infinite;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
   }
-  
-  button {
-    width: 100%;
-    padding: 10px;
-    background: #28a745;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: 0.3s;
+  50% {
+    background-position: 100% 50%;
   }
-  
-  button:hover {
-    background: #218838;
+  100% {
+    background-position: 0% 50%;
   }
-  
-  .add-group {
-    background: #f8f9fa;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .group-list {
-    list-style: none;
-    padding: 0;
-    text-align: center;
-  }
-  
-  .group-list li {
-    padding: 10px;
-    margin: 5px;
-    background: #17a2b8;
-    color: white;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  .group-list li:hover {
-    background: #138496;
-  }
-  
-  .group-details {
-    background: #f8f9fa;
-    padding: 20px;
-    border-radius: 10px;
-    margin-top: 20px;
-  }
-  
-  .add-members {
-    margin-top: 15px;
-  }
-  
-  .transactions-list {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .transactions-list li {
-    background: #ffebcc;
-    padding: 10px;
-    margin: 5px;
-    border-radius: 6px;
-    color: #555;
-    font-size: 14px;
-  }
-  
-  .add-transaction {
-    margin-top: 20px;
-  }
-  
-  button.complete-btn {
-    background: #dc3545;
-    margin-top: 10px;
-  }
-  
-  button.complete-btn:hover {
-    background: #c82333;
-  }
-  
+}
+
+.dashboard-content {
+  position: relative;
+  z-index: 1;
+}
+
+h1 {
+  text-align: center;
+  color: #2c3e50;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+h2 {
+  color: #34495e;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+h3 {
+  color: #3498db;
+  font-size: 1.25rem;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.create-group-section {
+  background: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  animation: slideInLeft 0.8s ease-in-out;
+}
+
+.create-group-section input,
+.create-group-section select {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.create-group-section input:focus,
+.create-group-section select:focus {
+  border-color: #3498db;
+  outline: none;
+  box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+}
+
+.create-group-section button {
+  background: #3498db;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.create-group-section button:hover {
+  background: #2980b9;
+  transform: translateY(-2px);
+}
+
+.group-list-section {
+  background: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  animation: slideInRight 0.8s ease-in-out;
+}
+
+.group-list-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.group-list-section li {
+  background: #f9f9f9;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.group-list-section li:hover {
+  background: #e9e9e9;
+  transform: translateX(5px);
+}
+
+.group-details-section {
+  background: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  animation: slideInUp 0.8s ease-in-out;
+}
+
+.group-members-section ul,
+.transactions-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.group-members-section li,
+.transactions-section li {
+  background: #f9f9f9;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+}
+
+.group-members-section li:hover,
+.transactions-section li:hover {
+  background: #e9e9e9;
+}
+
+.add-members-section select {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.add-members-section select:focus {
+  border-color: #3498db;
+  outline: none;
+  box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+}
+
+.add-members-section button {
+  background: #3498db;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.add-members-section button:hover {
+  background: #2980b9;
+  transform: translateY(-2px);
+}
+
+.add-transaction-section input,
+.add-transaction-section select {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.add-transaction-section input:focus,
+.add-transaction-section select:focus {
+  border-color: #3498db;
+  outline: none;
+  box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+}
+
+.add-transaction-section button {
+  background: #3498db;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.add-transaction-section button:hover {
+  background: #2980b9;
+  transform: translateY(-2px);
+}
+
+.debts-section table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.debts-section th,
+.debts-section td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.debts-section th {
+  background: #3498db;
+  color: #fff;
+  font-weight: 500;
+}
+
+.debts-section tr:hover {
+  background: #f9f9f9;
+}
+
+.mark-completed-section button {
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.mark-completed-section button:hover {
+  background: #c0392b;
+  transform: translateY(-2px);
+}

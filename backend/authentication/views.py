@@ -2,14 +2,20 @@ from django.shortcuts import render
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from django.contrib.auth.models import User
 from rest_framework import generics
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.serializers import ModelSerializer
+from rest_framework.generics import RetrieveAPIView
 
 class UserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'password']
         extra_kwargs = {'password': {'write_only': True}}
+
+class UserDetailView(RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
 
 class RegisterUserView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -23,3 +29,4 @@ class RegisterUserView(generics.CreateAPIView):
 
 token_obtain_view = TokenObtainPairView.as_view()
 token_refresh_view = TokenRefreshView.as_view()
+

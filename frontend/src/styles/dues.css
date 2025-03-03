@@ -1,0 +1,278 @@
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f7f6;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+.dues-container {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+h2 {
+  text-align: center;
+  color: #2c3e50;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+h3 {
+  color: #34495e;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.add-due {
+  background: #ecf0f1;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  animation: slideInLeft 0.8s ease-in-out;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.add-due input,
+.add-due select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #bdc3c7;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.add-due input:focus,
+.add-due select:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+.add-due button {
+  background: #3498db;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+}
+
+.add-due button:hover {
+  background: #2980b9;
+}
+
+.dues-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  animation: slideInRight 0.8s ease-in-out;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.due-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.due-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.due-card h3 {
+  color: #3498db;
+  margin-bottom: 10px;
+}
+
+.due-card p {
+  margin: 5px 0;
+  color: #7f8c8d;
+}
+
+.due-card button {
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  font-size: 0.9rem;
+  transition: background 0.3s ease;
+}
+
+.due-card button:hover {
+  background: #c0392b;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.modal {
+  background: #fff;
+  padding: 15px; 
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  box-sizing: border-box; 
+  animation: slideInUp 0.5s ease-in-out;
+}
+
+.modal h3 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.modal input,
+.modal select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #bdc3c7;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box; 
+}
+
+.modal input:focus,
+.modal select:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+.modal button {
+  background: #3498db;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+}
+
+.modal button:hover {
+  background: #2980b9;
+}
+
+.modal button:last-child {
+  background: #95a5a6;
+}
+
+.modal button:last-child:hover {
+  background: #7f8c8d;
+}
+
+
+.modal {
+  background: #fff;
+  padding: 15px; 
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  box-sizing: border-box; 
+  animation: slideInUp 0.5s ease-in-out;
+}
+
+.modal h3 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.modal input,
+.modal select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #bdc3c7;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box; 
+}
+
+.modal input:focus,
+.modal select:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+.modal button {
+  background: #3498db;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+}
+
+.modal button:hover {
+  background: #2980b9;
+}
+
+.modal button:last-child {
+  background: #95a5a6;
+}
+
+.modal button:last-child:hover {
+  background: #7f8c8d;
+}

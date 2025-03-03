@@ -59,15 +59,23 @@ class TransactionListCreateView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        id = self.kwargs["id"]
-        return Transaction.objects.filter(id=id)
+        group_id = self.kwargs["id"]
+        return Transaction.objects.filter(group_id=group_id)
 
     def perform_create(self, serializer):
-        id = self.kwargs["id"]
-        group = get_object_or_404(Group, id=id)
+        group_id = self.kwargs["id"]
+        group = get_object_or_404(Group, id=group_id)
 
         if self.request.user not in group.members.all():
             raise serializers.ValidationError("You are not a member of this group.")
+
+        payer_id = self.request.data.get("payer")
+        if not payer_id:
+            raise serializers.ValidationError("Payer is required.")
+
+        payer = User.objects.filter(id=payer_id).first()
+        if not payer or payer not in group.members.all():
+            raise serializers.ValidationError("Invalid payer.")
 
         participants_data = self.request.data.get("participants", [])
         participants = User.objects.filter(id__in=participants_data)
@@ -75,7 +83,7 @@ class TransactionListCreateView(generics.ListCreateAPIView):
         if participants.count() != len(participants_data):
             raise serializers.ValidationError("One or more participants do not exist.")
 
-        transaction = serializer.save(group=group, payer=self.request.user)
+        transaction = serializer.save(group=group, payer=payer)
         transaction.participants.add(*participants)
 
 class GroupExpenseView(APIView):
@@ -83,30 +91,44 @@ class GroupExpenseView(APIView):
 
     def get(self, request, id):
         group = get_object_or_404(Group, id=id)
+
+        if request.user not in group.members.all():
+            return Response({"error": "You are not a member of this group."}, status=status.HTTP_403_FORBIDDEN)
+
         transactions = Transaction.objects.filter(group=group)
 
-        member_expenses = {
-            member.id: {"name": member.username, "paid": 0, "owed": 0, "net_balance": 0}
-            for member in group.members.all()
+        debts = {
+            debtor.id: {creditor.id: 0 for creditor in group.members.all() if creditor.id != debtor.id}
+            for debtor in group.members.all()
         }
 
         for transaction in transactions:
             payer_id = transaction.payer.id
             amount = transaction.amount
             participants = transaction.participants.all()
-            num_participants = participants.count()
 
-            member_expenses[payer_id]["paid"] += amount
-
-            if num_participants > 0:
-                share = amount / num_participants
+            if participants.count() > 0:
+                share = amount / participants.count()
                 for participant in participants:
-                    member_expenses[participant.id]["owed"] += share
+                    if participant.id != payer_id: 
+                        debts[participant.id][payer_id] += share
 
-        for member_id, data in member_expenses.items():
-            data["net_balance"] = data["paid"] - data["owed"]
+        debt_summary = []
+        for debtor_id, debt_to_others in debts.items():
+            debtor = User.objects.get(id=debtor_id)
+            for creditor_id, amount in debt_to_others.items():
+                if amount > 0: 
+                    creditor = User.objects.get(id=creditor_id)
+                    debt_summary.append({
+                        "debtor": debtor.username,
+                        "creditor": creditor.username,
+                        "amount": round(amount, 2),  
+                    })
 
-        return Response({"group": group.name, "expenses": list(member_expenses.values())})
+        return Response({
+            "group": group.name,
+            "debts": debt_summary,
+        })
 
 class MarkGroupAsCompletedView(APIView):
     permission_classes = [permissions.IsAuthenticated]
