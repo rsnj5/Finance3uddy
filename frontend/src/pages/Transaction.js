@@ -129,8 +129,21 @@ const Transactions = () => {
 
   const token = getAuthToken();
 
+  const backgroundImage = {
+    backgroundImage: `url(${process.env.PUBLIC_URL}/trans1.png)`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  };
+  const transactionImage = {
+    backgroundImage: `url(${process.env.PUBLIC_URL}/transcon.jpg)`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  };
   return (
-    <div className="transactions-container">
+
+    <div className="transactions-container" style={transactionImage} >
+    <div className="animated-background" style={backgroundImage}></div>
+
       <h2>Transactions</h2>
 
       {!token ? (

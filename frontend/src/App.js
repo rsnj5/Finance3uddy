@@ -15,6 +15,7 @@ import Chart from "./pages/Chart";
 import Dues from "./pages/Dues";
 import Budgeting from "./pages/Budgeting";
 import CustomReports from "./pages/CustomReport";
+import LoanPlatform from "./pages/Loan";
 
 const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
@@ -40,6 +41,8 @@ const App = () => {
           <Route path="/dues" element={<ProtectedRoute element={<Dues />} />} />
           <Route path="/budgeting" element={<ProtectedRoute element={<Budgeting />} />} />
           <Route path="/customreport" element={<ProtectedRoute element={<CustomReports />} />} />
+          <Route path="/loans" element={<ProtectedRoute element={<LoanPlatform />} />} />
+
         </Routes>
       </TransactionProvider>
     </GoogleOAuthProvider>

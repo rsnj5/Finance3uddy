@@ -25,11 +25,16 @@ const Dashboard = () => {
     return null;
   }
 
+  const backgroundImage = {
+    backgroundImage: `url(${process.env.PUBLIC_URL}/dash.jpg)`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  };
+
   return (
     <div className="dashboard">
 
-      {/* Hero Section */}
-      <div className="hero">
+      <div className="hero" style={backgroundImage}>
         <h1>Finance3uddy</h1>
         <h2>Welcome now to your ultimate financial companion</h2>
         <p>
@@ -42,12 +47,10 @@ const Dashboard = () => {
         </p>
       </div>
 
-      {/* Dashboard Content */}
       <div className="dashboard-content">
         <h2 className="dashboard-title">Finance Management Dashboard</h2>
 
         <div className="cards-container">
-          {/* First Row: Three Boxes */}
           <div className="cards-row">
             <div
               className="card animated-card"
@@ -64,7 +67,7 @@ const Dashboard = () => {
                 Go to Transactions
               </button>
             </div>
-
+             
             <div
               className="card animated-card"
               onClick={() => navigate("/goals")}
@@ -99,7 +102,6 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Second Row: Three Boxes */}
           <div className="cards-row">
             <div
               className="card animated-card"
@@ -152,7 +154,6 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* Third Row: Two Boxes */}
           <div className="cards-row">
             <div
               className="card animated-card"
@@ -186,10 +187,26 @@ const Dashboard = () => {
                 Go to Dues
               </button>
             </div>
+
+            <div
+              className="card animated-card"
+              onClick={() => navigate("/loans")}
+            >
+              <h2>Loans</h2>
+              <p>
+                Monitor and manage all your financial Loans with ease.
+              </p>
+              <button
+                onClick={() => navigate("/loans")}
+                className="card-button"
+              >
+                Go to Loans
+              </button>
+            </div>
           </div>
         </div>
-
-        {/* Recent Transactions Section */}
+         
+          
         <div className="transactions-container">
           <h2>Recent Transactions</h2>
           <table>
@@ -201,6 +218,7 @@ const Dashboard = () => {
                 <th>Amount</th>
               </tr>
             </thead>
+
             <tbody>
               {recentTransactions.map((tx) => (
                 <tr key={tx.id}>

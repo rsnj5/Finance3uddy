@@ -76,9 +76,17 @@ const TransactionManagement = () => {
     link.click();
     document.body.removeChild(link);
   };
-  
+  const transactionImage = {
+    backgroundImage: `url(${process.env.PUBLIC_URL}/trans1.png)`,
+    
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  };
+
   return (
     <div className="transaction-management-container">
+    <div className="animated-background" style={transactionImage}></div>
+
       <h2>Transaction Management</h2>
       
       <div className="controls">

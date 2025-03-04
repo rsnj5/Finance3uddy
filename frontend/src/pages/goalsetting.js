@@ -114,9 +114,16 @@ const GoalTracking = () => {
       console.error("Error refreshing goals:", error);
     }
   };
+  const backgroundImage = {
+    backgroundImage: `url(${process.env.PUBLIC_URL}/cn1.png)`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  };
 
   return (
     <div className="goal-tracking-container">
+      <div className="animated-background" style={backgroundImage}></div>
+
       <h2>Goal Tracking</h2>
 
       <div className="add-goal">

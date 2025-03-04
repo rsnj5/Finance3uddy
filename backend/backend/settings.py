@@ -53,13 +53,14 @@ INSTALLED_APPS = [
     'goals',
     'expensesplit',
     'dues',
+    'loans',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'dj_rest_auth',
     'dj_rest_auth.registration',
-
+    
 ]
 
 MIDDLEWARE = [

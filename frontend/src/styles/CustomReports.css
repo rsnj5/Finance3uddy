@@ -40,14 +40,14 @@
   
   .date-input:focus,
   .select-input:focus {
-    border-color: #007bff;
+    border-color: #a632db;
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
   }
   
   .generate-button,
   .export-button {
     padding: 0.75rem 1.5rem;
-    background: #007bff;
+    background: #a534c7;
     color: white;
     border: none;
     border-radius: 8px;
@@ -58,7 +58,7 @@
   
   .generate-button:hover,
   .export-button:hover {
-    background: #0056b3;
+    background: #7b58fa;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
@@ -118,7 +118,7 @@
   
   .transaction-card {
     padding: 1rem;
-    background: #f9f9f9;
+    background: #bb9af1;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;

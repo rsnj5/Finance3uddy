@@ -84,8 +84,20 @@ const CustomReports = () => {
     document.body.removeChild(link);
   };
 
+ const backgroundImage = {
+    backgroundImage: `url(${process.env.PUBLIC_URL}/transco.jpg)`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  }; 
+  const bgImage = {
+    backgroundImage: `url(${process.env.PUBLIC_URL}/trans1.png)`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  };
   return (
-    <div className="custom-reports-container">
+    <div className="custom-reports-container" style={backgroundImage}>
+      <div className="animated-background" style={bgImage}></div>
+
       <h2 className="page-title">Custom Reports</h2>
 
       <div className="controls">

@@ -1,0 +1,271 @@
+.loan-platform-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: rgba(255, 215, 0, 0.1); 
+  }
+  
+  .animated-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+  }
+  
+  .loan-listing, .loan-applications {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 800px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .filters {
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .filters input, .filters select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    flex: 1;
+    min-width: 150px;
+  }
+  
+  .filters button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .filters button:hover {
+    background-color: #0056b3;
+  }
+  
+  .loan-card, .application-card {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 10px 0;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .loan-card:hover, .application-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .loan-card h3, .application-card h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .loan-card p, .application-card p {
+    margin: 10px 0;
+    color: #555;
+  }
+  
+  .loan-card button, .application-card button {
+    margin-right: 10px;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .loan-card button:hover, .application-card button:hover {
+    background-color: #218838;
+  }
+  
+  .loan-application-form {
+    margin-top: 15px;
+    animation: slideDown 0.5s ease-in-out;
+  }
+  
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .loan-application-form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .loan-application-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .loan-application-form button:hover {
+    background-color: #0056b3;
+  }
+  
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .modal {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    animation: slideUp 0.3s ease-in-out;
+  }
+  
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .modal input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .modal button {
+    margin-right: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .modal button:hover {
+    background-color: #0056b3;
+  }
+  
+  .error {
+    color: red;
+    margin-bottom: 10px;
+  }
+
+
+  @media (max-width: 768px) {
+    .loan-listing, .loan-applications {
+      padding: 15px;
+    }
+  
+    .filters {
+      flex-direction: column;
+    }
+  
+    .filters input, .filters select {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  
+    .loan-card, .application-card {
+      padding: 15px;
+    }
+  
+    .loan-card h3, .application-card h3 {
+      font-size: 1.2rem;
+    }
+  
+    .loan-card p, .application-card p {
+      font-size: 0.9rem;
+    }
+  
+    .loan-application-form input {
+      padding: 8px;
+    }
+    .loan-application-form button {
+        padding: 8px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .loan-listing, .loan-applications {
+        padding: 10px;
+      }
+    
+      .loan-card, .application-card {
+        padding: 10px;
+      }
+    
+      .loan-card h3, .application-card h3 {
+        font-size: 1rem;
+      }
+    
+      .loan-card p, .application-card p {
+        font-size: 0.8rem;
+      }
+    
+      .modal {
+        width: 95%;
+        padding: 15px;
+      }
+    }

@@ -72,9 +72,13 @@ const Budgeting = () => {
   const suggestions = generateSuggestions();
 
   const COLORS = ["#FF6B6B", "#4ECDC4", "#FFE66D", "#6B5B95", "#FFA07A", "#45B7D3", "#D4A5A5", "#88D8B0"];
-
+  const backgroundImage = {
+    backgroundImage: `url(${process.env.PUBLIC_URL}/transcon.jpg)`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  };
   return (
-    <div className="budgeting-container">
+    <div className="budgeting-container" style={backgroundImage}>
       <h2>Smart Budgeting</h2>
 
       <div className="budget-overview">
