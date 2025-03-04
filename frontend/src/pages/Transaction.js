@@ -135,7 +135,7 @@ const Transactions = () => {
     backgroundPosition: "center",
   };
   const transactionImage = {
-    backgroundImage: `url(${process.env.PUBLIC_URL}/transcon.jpg)`,
+    backgroundImage: `url(${process.env.PUBLIC_URL}/transco.jpg)`,
     backgroundSize: "cover",
     backgroundPosition: "center",
   };
