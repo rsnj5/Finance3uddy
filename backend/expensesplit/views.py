@@ -110,19 +110,20 @@ class GroupExpenseView(APIView):
             if participants.count() > 0:
                 share = amount / participants.count()
                 for participant in participants:
-                    if participant.id != payer_id: 
+                    if participant.id != payer_id:
+
                         debts[participant.id][payer_id] += share
 
         debt_summary = []
         for debtor_id, debt_to_others in debts.items():
             debtor = User.objects.get(id=debtor_id)
             for creditor_id, amount in debt_to_others.items():
-                if amount > 0: 
+                if amount > 0:
                     creditor = User.objects.get(id=creditor_id)
                     debt_summary.append({
                         "debtor": debtor.username,
                         "creditor": creditor.username,
-                        "amount": round(amount, 2),  
+                        "amount": round(amount, 2),
                     })
 
         return Response({

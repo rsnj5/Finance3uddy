@@ -4,9 +4,6 @@ from .serializers import DueSerializer
 from .permissions import IsOwner
 
 class DueListCreateView(generics.ListCreateAPIView):
-    """
-    API view to list and create dues for the authenticated user.
-    """
     serializer_class = DueSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -17,9 +14,6 @@ class DueListCreateView(generics.ListCreateAPIView):
         serializer.save(user=self.request.user)
 
 class DueRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
-    """
-    API view to retrieve, update, or delete a specific due.
-    """
     serializer_class = DueSerializer
     permission_classes = [permissions.IsAuthenticated, IsOwner]
 
