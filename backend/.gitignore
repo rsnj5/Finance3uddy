@@ -1,5 +1,3 @@
-# Ignore database
-db.sqlite3
 
 # Ignore Python cache files
 *.pyc
@@ -9,3 +7,4 @@ __pycache__/
 **/__pycache__/
 
 .env
+env/

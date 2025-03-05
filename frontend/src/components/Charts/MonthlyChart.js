@@ -5,6 +5,7 @@ import { Chart }            from 'react-chartjs-2'
 
 const MonthlyChart = ({ monthlyData,thememode }) => {
  
+
   const lightTheme = {
     colorText: 'black',
     income: 'rgba(75,192,192,0.5)', 
@@ -12,6 +13,7 @@ const MonthlyChart = ({ monthlyData,thememode }) => {
     expenses: 'rgba(255,99,132,0.5)', 
     expensesBorder: 'rgba(255,99,132,1)',
   };
+
 
 
   const darkTheme = {
@@ -23,12 +25,14 @@ const MonthlyChart = ({ monthlyData,thememode }) => {
   };
 
 
+
   const colors = thememode === 'dark' ? darkTheme : lightTheme;
 
 
   const data = {
     labels: monthlyData.map(data=>data.month),
     datasets: [
+
 
          
       {
@@ -38,6 +42,7 @@ const MonthlyChart = ({ monthlyData,thememode }) => {
         borderWidth: 1,
         data: monthlyData.map(data=>data.total_income),
       },
+
       {
         label: 'Expenses',
         backgroundColor: colors.expenses,
@@ -48,6 +53,7 @@ const MonthlyChart = ({ monthlyData,thememode }) => {
     ],
   };
  
+
     const options = {
       scales: {
         x: {

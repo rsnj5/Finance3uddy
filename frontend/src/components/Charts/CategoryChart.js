@@ -2,8 +2,10 @@ import React from 'react';
 import { Pie } from 'react-chartjs-2';
 
 const CategoryChart = ({ categoryData, thememode }) => {
+
   const incomeData = categoryData.filter((data) => data.total_income !== null);
   const expenseData = categoryData.filter((data) => data.total_expense !== null);
+
 
   const lightTheme = {
     colorText: 'black',
@@ -23,8 +25,10 @@ const CategoryChart = ({ categoryData, thememode }) => {
 
   const theme = thememode === 'dark' ? darkTheme : lightTheme;
 
+
   const incomeColors = generateColors(incomeData.length, thememode);
   const expenseColors = generateColors(expenseData.length, thememode);
+
 
   const incomeChartData = {
     labels: incomeData.map((data) => data.category),
@@ -52,10 +56,11 @@ const CategoryChart = ({ categoryData, thememode }) => {
     ],
   };
 
+
   const options = {
     maintainAspectRatio: true,
     responsive: true,
-    aspectRatio: 2, 
+    aspectRatio: 4,
     plugins: {
       legend: {
         position: 'bottom',
@@ -69,6 +74,7 @@ const CategoryChart = ({ categoryData, thememode }) => {
 
   return (
     <div className="flex flex-wrap justify-center gap-6">
+      {/* Income Pie Chart */}
       <div
         className="w-[250px] h-[250px] p-4 shadow-md rounded-lg dark:text-white"
         style={{ backgroundColor: thememode === 'dark' ? '#2c3034' : 'white' }}
@@ -76,6 +82,7 @@ const CategoryChart = ({ categoryData, thememode }) => {
         <p className="w-full text-center text-sm font-bold">Income Distribution</p>
         <Pie data={incomeChartData} options={options} />
       </div>
+
 
       <div
         className="w-[250px] h-[250px] p-4 shadow-md rounded-lg dark:text-white"
@@ -89,6 +96,7 @@ const CategoryChart = ({ categoryData, thememode }) => {
 };
 
 export default CategoryChart;
+
 
 const generateColors = (count, thememode) => {
   const backgroundColors = [];
@@ -110,4 +118,3 @@ const generateColors = (count, thememode) => {
     borderColors,
   };
 };
-

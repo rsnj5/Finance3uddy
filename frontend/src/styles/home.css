@@ -1,98 +1,289 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Poppins:wght@300;400;600;700&display=swap');
+
 .landing-container {
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    font-family: 'Poppins', sans-serif;
     color: white;
-    text-align: center;
-    position: relative;
     overflow: hidden;
 }
 
-@keyframes financeGlow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-.animated-background {
-    position: absolute;
-    top: 0;
-    left: 0;
+.hero-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     width: 100%;
-    height: 100%;
-    background: linear-gradient(-45deg, #6e8efb, #a777e3, #ff7eb3, #ff758c);
-    background-size: 400% 400%;
-    animation: financeGlow 8s ease infinite;
-    z-index: -1;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(40, 58, 90, 0.9), rgba(58, 120, 192, 0.9));
+    position: relative;
+    padding: 20px;
 }
 
-.bar {
-    width: 10px;
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 5px;
-    transition: height 0.8s ease-in-out;
+.hero-section .content {
+    max-width: 750px;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-
-.content {
-    max-width: 500px;
+.hero-section h1 {
+    font-size: 4.5rem;
+    font-weight: 700;
+    color: #ddc55b;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+    animation: fadeInDown 1s ease-in-out;
 }
 
-.content h1 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
+.hero-section p {
+    font-size: 2.6rem;
+    font-weight: 500;
+    margin-bottom: 15px;
+    animation: fadeInUp 1s ease-in-out;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #f8f2f2;
 }
 
-.content p {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
+.hero-section .subtext {
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: rgba(204, 238, 11, 0.9);
+    margin-bottom: 30px;
+    font-family: fantasy;
 }
 
-.buttons {
+.hero-section .buttons {
     display: flex;
     justify-content: center;
     gap: 15px;
+    animation: fadeInUp 1.5s ease-in-out;
 }
 
-button {
-    padding: 10px 20px;
-    font-size: 1rem;
+.hero-section button {
+    padding: 14px 28px;
+    font-size: 1.2rem;
+    font-weight: 600;
     border: none;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 30px;
     transition: 0.3s;
 }
 
-.login-btn {
+.hero-section .login-btn {
     background-color: #ffffff;
-    color: #6e8efb;
+    color: #2878c0;
 }
 
-.signup-btn {
+.hero-section .signup-btn {
     background-color: #ff7eb3;
     color: white;
 }
 
-button:hover {
-    opacity: 0.8;
+.hero-section button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.features-section {
+    width: 100%;
+    padding: 60px 20px;
+    background-color: #ffffff;
+    color: #333;
+    text-align: center;
+}
+
+.features-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: #6e8efb;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    max-width: 1800px;
+    margin: 0 auto;
+}
+
+.feature-card {
+    background-color: #a58abb;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.feature-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #061b63;
+}
+
+.feature-card p {
+    font-size: 1rem;
+    color: #580303;
 }
 
 .footer {
     width: 100%;
-    position: absolute;
-    bottom: 20px; 
+    padding: 40px 20px 20px;
+    background-color: #7f498a;
+    color: white;
     text-align: center;
 }
 
-.footer h2 {
-    font-size: 1.8rem;
-    margin: 0;
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 20px;
 }
 
-.footer p {
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 20px;
+}
+
+.footer-section h3 {
     font-size: 1.2rem;
-    margin: 5px 0;
+    margin-bottom: 15px;
+    color: #6e8efb;
+}
+
+.footer-section p, 
+.footer-section ul {
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+    color: #ccc;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.footer-section ul li a:hover {
+    color: #6e8efb;
+}
+
+.footer-bottom {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #444;
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 1024px) {
+    .hero-section {
+        height: auto;
+        padding: 50px 30px;
+    }
+
+    .hero-section h1 {
+        font-size: 3.5rem;
+    }
+
+    .hero-section p {
+        font-size: 2rem;
+    }
+
+    .hero-section .subtext {
+        font-size: 1.6rem;
+    }
+
+    .hero-section .buttons {
+        flex-direction: column;
+    }
+
+    .hero-section button {
+        width: 100%;
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-section h1 {
+        font-size: 3rem;
+    }
+
+    .hero-section p {
+        font-size: 1.5rem;
+    }
+
+    .hero-section .subtext {
+        font-size: 1.4rem;
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section {
+        padding: 40px 20px;
+    }
+
+    .hero-section h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-section p {
+        font-size: 1.2rem;
+    }
+
+    .hero-section .subtext {
+        font-size: 1.2rem;
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
 }

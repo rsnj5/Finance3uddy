@@ -11,6 +11,7 @@ const WeeklyChart = ({ weeklyData, thememode }) => {
     expensesBorder: 'rgba(255,99,132,1)',
   };
 
+
   const darkTheme = {
     colorText: 'white',
     income: 'rgba(34,139,34,0.5)', 
@@ -18,11 +19,13 @@ const WeeklyChart = ({ weeklyData, thememode }) => {
     expenses: 'rgba(165,42,42,0.5)',
     expensesBorder: 'rgba(165,42,42,1)',
   };
+
   const colors = thememode === 'dark' ? darkTheme : lightTheme;
 
   const data = {
     labels: weeklyData?.map((data) => data.week),
     datasets: [
+
 
       {
         label: 'Income',
@@ -31,6 +34,7 @@ const WeeklyChart = ({ weeklyData, thememode }) => {
         borderWidth: 1,
         data: weeklyData?.map((data) => data.total_income),
       },
+
 
       {
         label: 'Expenses',
@@ -41,6 +45,7 @@ const WeeklyChart = ({ weeklyData, thememode }) => {
       },
     ],
   };
+
 
   const options = {
     scales: {

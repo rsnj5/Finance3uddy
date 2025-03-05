@@ -1,64 +1,98 @@
-
 .chart-container {
-    padding: 20px;
-    background-color: #f9fafb;
-    min-height: 100vh;
-  }
-  
-  .chart-header {
-    text-align: center;
-    margin-bottom: 40px;
-  }
-  
+  padding: 20px;
+  background-color: #f9fafb;
+  min-height: 100vh;
+}
+
+.chart-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.chart-header h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1a202c;
+}
+
+.chart-header p {
+  font-size: 1rem;
+  color: #4a5568;
+  margin-top: 10px;
+}
+
+.line-charts,
+.pie-charts {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.chart-card {
+  flex: 1;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+@media (max-width: 1024px) {
   .chart-header h1 {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #1a202c;
+      font-size: 1.8rem;
   }
-  
+
   .chart-header p {
-    font-size: 1rem;
-    color: #4a5568;
-    margin-top: 10px;
+      font-size: 0.9rem;
   }
-  
-  .line-charts {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    margin-bottom: 40px;
-  }
-  
-  .line-charts .chart-card {
-    flex: 1;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-  }
-  
+
+  .line-charts,
   .pie-charts {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
+      gap: 15px;
   }
-  
-  .pie-charts .chart-card {
-    flex: 1;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-  }
-  
-  @media (max-width: 768px) {
-    .line-charts,
-    .pie-charts {
+}
+
+@media (max-width: 768px) {
+  .line-charts,
+  .pie-charts {
       flex-direction: column;
-    }
-  
-    .line-charts .chart-card,
-    .pie-charts .chart-card {
-      margin-bottom: 20px;
-    }
   }
+
+  .chart-card {
+      margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chart-container {
+      padding: 15px;
+  }
+
+  .chart-header h1 {
+      font-size: 1.6rem;
+  }
+
+  .chart-header p {
+      font-size: 0.85rem;
+  }
+
+  .chart-card {
+      padding: 15px;
+      border-radius: 8px;
+  }
+}
+
+@media (max-width: 360px) {
+  .chart-header h1 {
+      font-size: 1.4rem;
+  }
+
+  .chart-header p {
+      font-size: 0.8rem;
+  }
+
+  .chart-card {
+      padding: 12px;
+      border-radius: 6px;
+  }
+}

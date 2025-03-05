@@ -267,3 +267,27 @@ h3 {
 .modal button:last-child:hover {
   background: #7f8c8d;
 }
+@media (max-width: 768px) {
+  .goal-tracking-container {
+    width: 95%;
+    padding: 15px;
+  }
+
+  .goals-list {
+    grid-template-columns: 1fr;
+  }
+
+  .goal-card button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .modal {
+    width: 90%;
+  }
+
+  .modal button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}

@@ -116,9 +116,16 @@ const Dues = ({ user }) => {
       console.error("Error refreshing dues:", error);
     }
   };
+  const backgroundImage = {
+    backgroundImage: `url(${process.env.PUBLIC_URL}/trans1.png)`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  };
 
   return (
     <div className="dues-container">
+    <div className="animated-background" style={backgroundImage}></div>
+
       <h2>Dues Management</h2>
 
       <div className="add-due">
