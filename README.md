@@ -1,5 +1,4 @@
 # Finance3uddy
-# Finance3uddy
 
 ## Personal Finance Management Platform
 
