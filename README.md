@@ -32,6 +32,7 @@ Finance3uddy is a web-based Personal Finance Management Platform designed to hel
 - Alerts for upcoming payments and bills.
 
   ![Dues Preview](./frontend/public/dues.png)
+  ![Dues Preview](./frontend/public/reminder.jpeg)
 
 ### Financial Goal Setting
 - Users can set savings goals and track their progress.
