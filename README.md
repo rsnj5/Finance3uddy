@@ -110,13 +110,20 @@ REACT_APP_API_URL=http://127.0.0.1:8000/
 ---
 
 ## API Endpoints
+## API Endpoints
 | Endpoint | Method | Description |
 |----------|--------|-------------|
-| `/api/auth/register/` | POST | Register a new user |
-| `/api/auth/login/` | POST | Login a user |
-| `/api/transactions/` | GET | Get all transactions |
-| `/api/transactions/` | POST | Add a new transaction |
-| `/api/goals/` | GET | Get all financial goals |
+| `/api/auth/` | Include | Authentication endpoints |
+| `/api/auth/registration/` | Include | User registration via dj-rest-auth |
+| `/api/auth/google/` | Include | Google authentication via allauth |
+| `/api/token/` | POST | Obtain JWT token |
+| `/api/token/refresh/` | POST | Refresh JWT token |
+| `/api/users/authorized/` | GET | Get authorized users |
+| `/api/transactions/` | Include | Manage transactions |
+| `/api/goals/` | Include | Manage financial goals |
+| `/api/expensesplit/` | Include | Manage expense splitting |
+| `/api/dues/` | Include | Manage dues and payments |
+| `/api/loans/` | Include | Manage loans |
 
 ---
 
