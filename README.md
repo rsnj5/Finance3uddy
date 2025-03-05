@@ -67,7 +67,7 @@ Finance3uddy is a web-based Personal Finance Management Platform designed to hel
 
   ![Reports](./frontend/public/report.png)  
 
-- **Loans** – Users can see the details of their loans.  
+- **Loans** –Users can compare loans from different providers side-by-side.Users can track the status of their loan applications.
 
   ![Loans](./frontend/public/loans.png)  
 
