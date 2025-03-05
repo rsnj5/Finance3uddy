@@ -7,43 +7,53 @@ Finance3uddy is a web-based Personal Finance Management Platform designed to hel
 
 ## Features
 
-### 1. Income and Expense Tracking
-- Users can add, edit, and categorize income and expenses (e.g., rent, groceries, entertainment).
-
-### 2. Graphs and Visualizations
-- Interactive charts display financial trends, monthly summaries, and expense breakdowns.
-
-### 3. CSV Import/Export
-- Users can import bank statements via CSV files and export data for offline use or tax purposes.
-
-### 4. Transaction Management
-- Search, filter, and sort transactions by date, category, or amount for better financial organization.
-
-### 5. User-Friendly Dashboard
+### User-Friendly Dashboard
 - Intuitive UI displaying key metrics such as total income, expenses, and savings.
+  ![Dashboard Preview](./frontend/public/dashboard.png)
 
-### 6. Data Security & Authentication
-- Secure user authentication and financial data storage.
+### Income and Expense Tracking
+- Users can add, edit, and categorize income and expenses (e.g., rent, groceries, entertainment).
+  ![Transaction Preview](./frontend/public/transaction.png)
 
-### 7. Notifications & Bill Reminders
+### Transaction Management
+- Search, filter, and sort transactions by date, category, or amount for better financial organization.
+- Users can import bank statements via CSV files and export data for offline use or tax purposes.
+  ![View Transactions](./frontend/public/viewtransaction.png)
+
+### Data Security & Authentication
+- Secure user authentication and financial data storage using Django authentication and Google Auth.
+  ![Home Preview](./frontend/public/home.png)
+
+### Notifications & Bill Reminders
 - Alerts for upcoming payments and bills.
+  ![Dues Preview](./frontend/public/dues.png)
 
-### 8. Financial Goal Setting
+### Financial Goal Setting
 - Users can set savings goals and track their progress.
+  ![Goal Preview](./frontend/public/goal.png)
+
+### Graphs and Visualizations
+- Interactive charts display financial trends, monthly summaries, and expense breakdowns.
+  ![Chart Preview](./frontend/public/chart.png)
 
 ### Optional Features
 - **Smart Budgeting** – Suggestions based on spending patterns.
+  ![Budget Preview](./frontend/public/budget.png)
 - **Expense Splitting** – Allow users to split expenses with friends, track shared costs, and settle balances easily.
+  ![Expense Split Preview](./frontend/public/expensesplit.png)
 - **Custom Reports** – Generate personalized reports for financial planning or tax purposes.
+  ![Report Preview](./frontend/public/report.png)
+- **Loans** – Users can see the details of their loans.
+  ![Loans Preview](./frontend/public/loans.png)
 
 ---
 
 ## Tech Stack
 - **Backend:** Django (Python)
 - **Frontend:** React (JavaScript)
-- **Database:** PostgreSQL 
+- **Database:** PostgreSQL
 - **Authentication:** Django Authentication
-- **Data Visualization:** Chart.js 
+- **Data Visualization:** Chart.js
 
 ---
 
@@ -58,7 +68,7 @@ Ensure you have the following installed:
 ### Backend Setup (Django)
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/finance3uddy.git
+git clone https://github.com/rsnj5/finance3uddy.git
 cd finance3uddy/backend
 
 # Create virtual environment
@@ -110,7 +120,7 @@ REACT_APP_API_URL=http://127.0.0.1:8000/
 ---
 
 ## API Endpoints
-## API Endpoints
+
 | Endpoint | Method | Description |
 |----------|--------|-------------|
 | `/api/auth/` | Include | Authentication endpoints |
@@ -138,3 +148,4 @@ REACT_APP_API_URL=http://127.0.0.1:8000/
 
 ## License
 This project is licensed under the MIT License.
+
