@@ -32,7 +32,6 @@ Finance3uddy is a web-based Personal Finance Management Platform designed to hel
 - Users can set savings goals and track their progress.
 
 ### Optional Features
-- **Bank Account Linking** – Integrate with APIs for real-time transaction syncing.
 - **Smart Budgeting** – Suggestions based on spending patterns.
 - **Expense Splitting** – Allow users to split expenses with friends, track shared costs, and settle balances easily.
 - **Custom Reports** – Generate personalized reports for financial planning or tax purposes.
