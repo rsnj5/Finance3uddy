@@ -9,41 +9,55 @@ Finance3uddy is a web-based Personal Finance Management Platform designed to hel
 
 ### User-Friendly Dashboard
 - Intuitive UI displaying key metrics such as total income, expenses, and savings.
+
   ![Dashboard Preview](./frontend/public/dashboard.png)
 
 ### Income and Expense Tracking
 - Users can add, edit, and categorize income and expenses (e.g., rent, groceries, entertainment).
+
   ![Transaction Preview](./frontend/public/transaction.png)
 
 ### Transaction Management
 - Search, filter, and sort transactions by date, category, or amount for better financial organization.
 - Users can import bank statements via CSV files and export data for offline use or tax purposes.
+
   ![View Transactions](./frontend/public/viewtransaction.png)
 
 ### Data Security & Authentication
 - Secure user authentication and financial data storage using Django authentication and Google Auth.
+
   ![Home Preview](./frontend/public/home.png)
 
 ### Notifications & Bill Reminders
 - Alerts for upcoming payments and bills.
+
   ![Dues Preview](./frontend/public/dues.png)
 
 ### Financial Goal Setting
 - Users can set savings goals and track their progress.
+
   ![Goal Preview](./frontend/public/goal.png)
 
 ### Graphs and Visualizations
 - Interactive charts display financial trends, monthly summaries, and expense breakdowns.
+
   ![Chart Preview](./frontend/public/chart.png)
 
 ### Optional Features
 - **Smart Budgeting** – Suggestions based on spending patterns.
+
   ![Budget Preview](./frontend/public/budget.png)
+
 - **Expense Splitting** – Allow users to split expenses with friends, track shared costs, and settle balances easily.
+
   ![Expense Split Preview](./frontend/public/expensesplit.png)
+
 - **Custom Reports** – Generate personalized reports for financial planning or tax purposes.
+
   ![Report Preview](./frontend/public/report.png)
+
 - **Loans** – Users can see the details of their loans.
+
   ![Loans Preview](./frontend/public/loans.png)
 
 ---
