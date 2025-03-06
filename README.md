@@ -165,8 +165,6 @@ REACT_APP_API_URL=http://127.0.0.1:8000/api/auth/
 | `/api/expensesplit/` | Include | Manage expense splitting |  
 | `/api/dues/` | Include | Manage dues and payments |  
 | `/api/loans/` | Include | Manage loans | 
-| 
-
 
 ---
 
