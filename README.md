@@ -133,13 +133,20 @@ npm start
 ## 🔑 Environment Variables  
 Create a `.env` file in the `backend/` directory and configure the following variables:  
 ```
-SECRET_KEY=your_secret_key
-DEBUG=True
-DATABASE_URL=your_database_url
+EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+EMAIL_HOST_USER=your_email@example.com  
+EMAIL_HOST_PASSWORD=your_secure_password  
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY=your_google_oauth_client_id
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET=your_google_oauth_client_secret
 ```
 Similarly, for the frontend, create a `.env` file in `frontend/`:  
 ```
-REACT_APP_API_URL=http://127.0.0.1:8000/
+REACT_APP_GOOGLE_CLIENT_ID=your_google_oauth_client_id
+REACT_APP_API_URL=http://127.0.0.1:8000/api/auth/
+
 ```
 
 ---
@@ -157,7 +164,9 @@ REACT_APP_API_URL=http://127.0.0.1:8000/
 | `/api/goals/` | Include | Manage financial goals |  
 | `/api/expensesplit/` | Include | Manage expense splitting |  
 | `/api/dues/` | Include | Manage dues and payments |  
-| `/api/loans/` | Include | Manage loans |  
+| `/api/loans/` | Include | Manage loans | 
+| 
+
 
 ---
 
